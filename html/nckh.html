@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Diễn đàn học tiếng Anh</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+    }
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    nav ul li a {
+      color: #333;
+      text-decoration: none;
+      padding: 5px;
+    }
+    .post {
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .post .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .post .content {
+      margin-top: 10px;
+    }
+    .post .votes {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .post .vote-buttons {
+      margin-top: 10px;
+    }
+    .post .vote-button {
+      cursor: pointer;
+      margin-right: 5px;
+      padding: 2px 5px;
+    }
+    .post .upvote {
+      background-color: #ff4500;
+      color: #fff;
+    }
+    .post .downvote {
+      background-color: #7193ff;
+      color: #fff;
+    }
+    .login-button {
+      float: right;
+      margin-top: 10px;
+      margin-right: 20px;
+    }
+    .search-bar {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .search-bar input[type="text"] {
+      padding: 5px;
+      width: 200px;
+    }
+    .register-link {
+      margin-top: 20px;
+      text-align: center;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Diễn đàn học tiếng Anh</h1>
+    <a href="register.html" class="login-button">Đăng ký</a>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#">Trang chủ</a></li>
+      <li><a href="#">Bài viết</a></li>
+      <li><a href="#">Diễn đàn</a></li>
+      <li><a href="#">Thành viên</a></li>
+      <li><a href="#">Liên hệ</a></li>
+    </ul>
+  </nav>
+  
+  <div class="search-bar">
+    <input type="text" placeholder="Tìm kiếm...">
+  </div>
+
+  <div class="post">
+    <div class="title">Tiêu đề bài viết</div>
+    <div class="content">Nội dung bài viết...</div>
+    <div class="votes" id="post1-votes">0</div>
+    <div class="vote-buttons">
+      <span class="vote-button upvote" onclick="upvote('post1')">Upvote</span>
+      <span class="vote-button downvote" onclick="downvote('post1')">Downvote</span>
+    </div>
+  </div>
+  <div class="post">
+    <div class="title">Tiêu đề bài viết</div>
+    <div class="content">Nội dung bài viết...</div>
+    <div class="votes" id="post2-votes">0</div>
+    <div class="vote-buttons">
+      <span class="vote-button upvote" onclick="upvote('post2')">Upvote</span>
+      <span class="vote-button downvote" onclick="downvote('post2')">Downvote</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Bản quyền © 2023 Diễn đàn học tiếng Anh. All rights reserved.</p>
+  </footer>
+  <script>
+    function upvote(postId) {
+      // Xử lý logic tăng số lượng upvote và cập nhật giao diện
+      var votesElement = document.getElementById(postId + '-votes');
+      var votes = parseInt(votesElement.innerHTML);
+      votes++;
+      votesElement.innerHTML = votes;
+    }
+
+    function downvote(postId) {
+      // Xử lý logic giảm số lượng downvote và cập nhật giao diện
+      var votesElement = document.getElementById(postId + '-votes');
+      var votes = parseInt(votesElement.innerHTML);
+      votes--;
+      votesElement.innerHTML = votes;
+    }
+  </script>
+
+</body>
+
+</html>
