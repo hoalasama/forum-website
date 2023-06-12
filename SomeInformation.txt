@@ -25,4 +25,5 @@ Hình ảnh
 		    Mã nguồn tạo forum có tính phí. 
 		    Có tính năng thông dụng: tốc độ load nhanh, dễ dàng sử dụng, khả năng SEO tốt, ...
 
+Khảo sát thống kê
 	
