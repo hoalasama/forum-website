@@ -1,0 +1,7 @@
+Another forum on Joomla
+------------
+[Link bài tổng hợp] https://www.joomdev.com/5-best-forum-joomla-extensions/
+[EasyDiscuss]: https://stackideas.com/easydiscuss
+[ChronoForums]: https://extensions.joomla.org/extension/chronoforums/
+[CjForum]: https://shondalai.com/products/cjforum/
+[Cobalt]: None
