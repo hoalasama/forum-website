@@ -30,4 +30,8 @@ Hình ảnh ?
 		    Có tính năng thông dụng: tốc độ load nhanh, dễ dàng sử dụng, khả năng SEO tốt, ...
 
 Khảo sát thống kê
+ Tìm quà sau khi đc khảo sát?
+ Thống kê theo dạng nào?
+ Hiện tại đang tập trung xây dựng web, dự định để khảo sát sau cùng?
+ 
 	
