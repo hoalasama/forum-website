@@ -17,7 +17,8 @@ Tại sao lại dùng Forum [///] trên [...]?
 Lấn trang đc ko? 
 	Như phần cần 8 trang nhưng ko đủ trang và có phần cần 5 trang nhưng dư thì đc bù đắp qua lại ko?
 Phần sản phẩm của từng công việc là tổng hợp vào báo cáo? 
-Hình ảnh 
+Hình ảnh ?
+	Hashtag theo môn học/khoa của Trường <?>
 (Wordpress? DJango? Joomla?) {https://www.makeforum.org/tich-hop-forum-vao-wordpress/}
 	1) kunena.org - Kunena
 	2) vbulletin.com - vBulletin (X)
