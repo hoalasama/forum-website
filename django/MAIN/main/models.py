@@ -8,7 +8,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
 
-# Create your models here.
+
 
 User = get_user_model()
 
@@ -18,7 +18,7 @@ class Author(models.Model):
     slug = slug = models.SlugField(max_length=400, unique=True, blank=True)
     bio = HTMLField()
     points = models.IntegerField(default=0)
-    profile_pic = ResizedImageField(size=[50, 80], quality=100, upload_to="authors", default=None, null=True, blank=True)
+    profile_pic = ResizedImageField(size=[50, 80], quality=100, upload_to="authors", default=None, null=True, blank=False)
 
     def __str__(self):
         return self.fullname
@@ -90,6 +90,7 @@ class Post(models.Model):
     )
     tags = TaggableManager()
     comments = models.ManyToManyField(Comment, blank=True)
+
 
     def save(self, *args, **kwargs):
         if not self.slug:

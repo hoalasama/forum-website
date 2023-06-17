@@ -18,13 +18,20 @@
             <nav class="navigation hide" id="navigation">
                 <span class="close-icon" id="close-icon" onclick="showIconBar()"><i class="fa fa-close"></i></span>
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="forums.html">Forums</a></li>
-                    <li class="nav-item"><a href="posts.html">Posts</a></li>
-                    <li class="nav-item"><a href="detail.html">Detail</a></li>
+                    <li class="nav-item"><a href="{% url 'home' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a href="{% url 'signup' %}">Signup</a></li>
+                    <li class="nav-item"><a href="{% url 'signin' %}">Signin</a></li>
+                    {% endif %}
                 </ul>
             </nav>
             <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
             <div class="brand">My Forum</div>
+            {% if user.is_authenticated %}
+            <div style="font-size:50px; font-weight:300px; margin-left:100px;"><a href="{% url 'create_post' %}">+</a></div>
+            {% endif %}
         </div>
         <!--SearchBox Section-->
         <div class="search-box">
@@ -45,7 +52,7 @@
         
 
     <footer>
-        <span>&copy;  Selmi Abderrahim | All Rights Reserved</span>
+        <span>&copy;  All Rights Reserved</span>
     </footer>
     <script src="{% static 'main.js' %}"></script>
 </body>

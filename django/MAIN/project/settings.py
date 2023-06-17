@@ -41,6 +41,9 @@ INSTALLED_APPS = [
      'tinymce',
      'hitcount',
      'taggit',
+     'register',
+     'crispy_forms',
+     'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
+        'DIRS': [BASE_DIR /"templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,6 +116,8 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
@@ -126,6 +131,11 @@ else:
     STATICFILES_DIRS=[BASE_DIR / 'static']
 
 # Default primary key field type
+STATICFILES_DIRS = [BASE_DIR / 'static']
+MEDIA_ROOT  = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
