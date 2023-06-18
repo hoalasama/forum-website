@@ -84,7 +84,7 @@ class Post(models.Model):
     content = HTMLField()
     categories = models.ManyToManyField(Category)
     date = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(default=True)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
     )

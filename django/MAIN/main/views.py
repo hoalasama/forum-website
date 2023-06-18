@@ -26,7 +26,7 @@ def posts(request, slug):
 
     context = {
         "posts":posts,
-        "forum":category,
+        "forum": category,
     }
 
     return render(request, "posts.html", context)
@@ -38,11 +38,11 @@ def create_post(request):
     form = PostForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-
             author = Author.objects.get(user=request.user)
             new_post = form.save(commit=False)
             new_post.user = author
             new_post.save()
+            form.save_m2m()
             return redirect("home")
     context.update({
         "form": form,
