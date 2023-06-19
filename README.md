@@ -33,4 +33,4 @@ password :
 ```bash
 lmaolmao
 ```
-
+front-end : static, templates
