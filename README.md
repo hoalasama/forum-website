@@ -1,25 +1,25 @@
 cách chạy forumweb
-'''bash
+```bash
 cd forumweb
-'''
+```
 
-'''bash
+```bash
 pip install virtualenv
-'''
+```
 
-'''bash
+```bash
 virtualenv env
-'''
+```
 
-'''bash
+```bash
 env\scripts\activate
-'''
+```
 
-'''bash
+```bash
 pip install -r requirements.txt
-'''
+```
 
 run server : 
-'''bash
+```bash
 python manage.py runserver
-'''
+```
