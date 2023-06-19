@@ -23,3 +23,14 @@ run server :
 ```bash
 python manage.py runserver
 ```
+server : http://127.0.0.1:8000/
+admin site : http://127.0.0.1:8000/admin/ 
+admin account : 
+```bash
+admin
+```
+password : 
+```bash
+lmaolmao
+```
+
