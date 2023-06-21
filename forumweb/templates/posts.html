@@ -37,7 +37,7 @@
         </div>
         <!--Pagination starts-->
             <div class="pagination">
-                pages: <a href="">1</a><a href="">2</a><a href="">3</a>
+                pages: {% for num_page in posts.paginator.page_range %}<a href="?page={{num_page}}">{{num_page}}</a> {% endfor %}
             </div>
         <!--pagination ends-->
     </div>

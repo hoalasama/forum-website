@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -28,7 +28,7 @@
                 </ul>
             </nav>
             <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
-            <div class="brand"><a href="{% url 'home' %}">My Forum</a></div>
+            <div class="brand">My Forum</div>
             {% if user.is_authenticated %}
             <div style="font-size:50px; font-weight:300px; margin-left:100px;"><a href="{% url 'create_post' %}">+</a></div>
             {% endif %}
