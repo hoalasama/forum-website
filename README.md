@@ -17,6 +17,8 @@ sau khi đã cài virtualenv, sau này chỉ cần chạy lại từ dòng này
 env\scripts\activate
 ```
 
+không cần chạy lại dòng này từ lần thứ 2
+
 ```bash
 pip install -r requirements.txt
 ```
