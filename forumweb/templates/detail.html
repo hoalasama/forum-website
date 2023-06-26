@@ -13,6 +13,7 @@
             <div class="head">
                 <div class="authors">Author</div>
                 <div class="content">Topic: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+                <div class="white"><a href="{% url 'delete_post' post.id %}">Delete</a></div>
             </div>
 
             <div class="body">
@@ -39,7 +40,7 @@
             {% csrf_token %}
             <div class="comment-area hide" id="comment-area">
                 <textarea name="comment" id="" placeholder="comment here ... "></textarea>
-                <input type="submit" value="submit" name="comment-form">
+                <input type="submit" value="Submit" name="comment-form">
             </div>
         </form>
         <!--Comments Section-->
@@ -68,7 +69,7 @@
             {% csrf_token %}
             <div class="comment-area hide" id="comment{{comment.id}}">
                 <textarea name="reply" id="" placeholder="reply here ... "></textarea>
-                <input type="submit" value="submit" name="reply-form">
+                <input type="submit" value="Submit" name="reply-form">
                 <input type="hidden" name="comment-id" value="{{comment.id}}">
             </div>
         </form>

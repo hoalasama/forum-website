@@ -7,6 +7,7 @@ from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
+#from django.urls import reverse
 
 
 
@@ -104,7 +105,11 @@ class Post(models.Model):
         return reverse("detail", kwargs={
             "slug":self.slug
         })
+
+     #def get_absolute_url(self): 
+        #return reverse("posts", kwargs={"pk": self.pk})
     
+
     @property
     def num_comments(self):
         return self.comments.count()

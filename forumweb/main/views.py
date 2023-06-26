@@ -2,9 +2,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from .models import Author, Category, Comment, Post, Reply
 from .utils import update_views
 from .forms import PostForm
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render
+from django.views import View
 
 def home(request):
     forums = Category.objects.all()
@@ -84,6 +87,16 @@ def create_post(request):
         "title": "Create New Post"
     })
     return render(request, "create_post.html", context)
+
+def delete_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    context = {'post': post}
+    if request.method == 'GET':
+        return render(request, 'delete_post.html',context)
+    elif request.method == 'POST':
+        post.delete()
+        messages.success(request, 'Deleted successfully.')
+        return render(request, 'forums.html', context)
 
 def latest_posts(request):
     posts = Post.objects.all().filter(approved=True)[:10]

@@ -1,0 +1,14 @@
+- Mẫu phiếu khảo sát
+	+ Quà sau khi khảo sát
+	+ Lùi lại lịch khảo sát
+	+ Liên kết ra file excel?
+	+ Tìm thêm link sách
+- Hỏi thêm về tiến độ webiste
+
+- Đc phép đổi nền tảng, ko đc đổi sản phẩm đầu ra
+
+- Đi từ tính năng -> Xem các tổ chức trong web -> (CSDL -> Giao diện -> Xây dựng thuật toán) -> Cấu trúc hệ thống
+
+	- Liệt kê các tính năng
+	
+

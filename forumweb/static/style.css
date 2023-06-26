@@ -389,6 +389,11 @@ footer{
 /* ########################################### */
 /*            detail.html                      */
 /* ########################################### */
+.white a{
+    font-weight: none;
+    color:#FEFEFE;
+}
+
 
 .head{
     display: flex;
