@@ -13,6 +13,9 @@
             <div class="head">
                 <div class="authors">Author</div>
                 <div class="content">Topic: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+                {% if user.is_authenticated and user == post.user.user %}
+                <div><a href="{% url 'delete_post' post.id %}">delete</a></div>
+                {% endif %}
             </div>
 
             <div class="body">

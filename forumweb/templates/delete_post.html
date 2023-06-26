@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h1 style="text-align:center; margin-block:50px; color:red;">{{user}}, Delete something</h1>
+{% if user.is_authenticated and user == post.user.user %}
+<form method="POST" action="{% url 'delete_post' post_id=post_id %}">
+    {% csrf_token %}
+    <strong>Are u sure</strong>
+    <button type="submit">delete</button>
+</form>
+{% endif %}
+{% endblock content %}

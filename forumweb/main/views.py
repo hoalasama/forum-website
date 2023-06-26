@@ -5,8 +5,10 @@ from .forms import PostForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
+from django.urls import reverse
 
 def home(request):
     forums = Category.objects.all()
@@ -87,6 +89,25 @@ def create_post(request):
         "title": "Create New Post"
     })
     return render(request, "create_post.html", context)
+@login_required
+def delete_post(request, post_id=None):
+    post_to_delete = get_object_or_404(Post, id=post_id)
+    
+    if post_to_delete.user.user != request.user:
+        return redirect('home')
+    elif request.method == 'POST':
+        post_to_delete.delete()
+        return redirect('home')
+
+    context = {
+        'post_id': post_id,
+        'user' : request.user,
+    }
+    return render(request, 'delete_post.html', context)
+    #url = reverse('delete_post', args=[post_id])
+def my_view(request, post_id):
+    post_id = Post.objects.get(id=post_id)
+    url = reverse('delete_post', args=[post_id])
 
 def latest_posts(request):
     posts = Post.objects.all().filter(approved=True)[:10]
