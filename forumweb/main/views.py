@@ -117,3 +117,14 @@ def latest_posts(request):
     }
 
     return render(request, "latest-posts.html", context)
+
+def search_result(request):
+    query = request.GET.get('query', '')
+    results = Post.objects.filter(title__icontains=query)
+
+    context = {
+        'query': query,
+        'objects': results
+    }
+
+    return render(request, 'search.html', context)

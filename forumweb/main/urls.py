@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, detail, posts, create_post, latest_posts, delete_post
+from .views import home, detail, posts, create_post, latest_posts, delete_post, search_result
 from . import views
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path("create_post", create_post, name="create_post"),
     path("latest_posts", latest_posts, name="latest_posts"),
     path("post/<post_id>/delete/", views.delete_post, name="delete_post"),
+    path("search/", search_result, name="search_result"),
 ]
