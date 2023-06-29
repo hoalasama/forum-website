@@ -38,3 +38,31 @@ password :
 lmaolmao
 ```
 front-end : static, templates
+
+expected function
+##
+search : done
+##
+edit post :
+##
+close comment, reply :
+##
+view user info :
+##
+upvote, downvote :
+##
+posts with tag list :
+##
+change language :
+##
+following the post :
+##
+notification on following post :
+##
+report post, category, bug :
+##
+(optional) show current popular posts :
+##
+user point for ranking :
+##
+
