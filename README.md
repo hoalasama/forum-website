@@ -49,6 +49,8 @@ close comment, reply :
 ##
 view user info :
 ##
+edit user info :
+##
 upvote, downvote :
 ##
 posts with tag list :
