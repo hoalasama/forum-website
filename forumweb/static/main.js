@@ -19,8 +19,17 @@ function showComment(){
     commentArea.classList.remove("hide");
 }
 
+function hideComment(){
+    var commentArea = document.getElementById("comment-area");
+    commentArea.classList.add("hide");
+}
 //Reply
 function showReplies(id){
     var replyArea = document.getElementById(id);
     replyArea.classList.remove("hide");
+}
+
+function hideReplies(id){
+    var replyArea = document.getElementById(id);
+    replyArea.classList.add("hide");
 }

@@ -45,7 +45,9 @@ search : done
 ##
 edit post :
 ##
-close comment, reply :
+hide comment, reply area : done
+##
+edit comment, reply :
 ##
 view user info :
 ##

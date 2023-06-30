@@ -46,6 +46,7 @@
             <div class="comment-area hide" id="comment-area">
                 <textarea name="comment" id="" placeholder="comment here ... "></textarea>
                 <input type="submit" value="submit" name="comment-form">
+                <button onclick="hideComment()">Hide</button>
             </div>
         </form>
         
@@ -80,6 +81,7 @@
                 <textarea name="reply" id="" placeholder="reply here ... "></textarea>
                 <input type="submit" value="submit" name="reply-form">
                 <input type="hidden" name="comment-id" value="{{comment.id}}">
+                <button onclick="hideReplies('comment{{comment.id}}')">Hide</button>
             </div>
         </form>
         
