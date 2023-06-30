@@ -128,3 +128,4 @@ def search_result(request):
     }
 
     return render(request, 'search.html', context)
+

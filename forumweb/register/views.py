@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from register.forms import UpdateForm
 from django.contrib.auth import logout as lt
 from main.models import Author
+from django.contrib.auth.models import User
 
 
 def signup(request):
@@ -63,6 +64,10 @@ def view_profile(request):
         "author" : author
     }
     return render(request, "register/viewprofile.html", context)
+
+def other_profile(request, slug):
+    author = Author.objects.get(slug=slug)
+    return render(request, "register/otherprofile.html", {'author': author})
 
 @login_required
 def logout(request):

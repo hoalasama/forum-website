@@ -53,6 +53,8 @@ view user info : ✅
 ##
 edit user info : ✅
 ##
+view user in post, comment, reply : ✅
+##
 upvote, downvote :
 ##
 posts with tag list :
