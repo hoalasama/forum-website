@@ -68,3 +68,21 @@ def view_profile(request):
 def logout(request):
     lt(request)
     return redirect("home")
+
+@login_required
+def edit_profile(request):
+    author = Author.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = UpdateForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')
+    else:
+        form = UpdateForm(instance=author)
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'register/editprofile.html', context)

@@ -49,9 +49,9 @@ hide comment, reply area : done
 ##
 edit comment, reply :
 ##
-view user info :
+view user info : done
 ##
-edit user info :
+edit user info : done
 ##
 upvote, downvote :
 ##
