@@ -4,6 +4,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from register.forms import UpdateForm
 from django.contrib.auth import logout as lt
+from main.models import Author
 
 
 def signup(request):
@@ -54,6 +55,14 @@ def update_profile(request):
         "title": "Update Profile",
     })
     return render(request, "register/update.html", context)
+@login_required
+def view_profile(request):
+    user = request.user
+    author = Author.objects.get(user=user)
+    context = {
+        "author" : author
+    }
+    return render(request, "register/viewprofile.html", context)
 
 @login_required
 def logout(request):
