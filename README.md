@@ -41,17 +41,17 @@ front-end : static, templates
 
 expected function
 ##
-search : done
+search : ✅
 ##
-edit post :
+edit post : 
 ##
-hide comment, reply area : done
+hide comment, reply area : ✅
 ##
 edit comment, reply :
 ##
-view user info : done
+view user info : ✅
 ##
-edit user info : done
+edit user info : ✅
 ##
 upvote, downvote :
 ##
