@@ -63,12 +63,15 @@
                     <div>Points: <u>{{comment.user.points}}</u></div>
                 </div>
                 <div class="content">
-                    {{comment.content}}
+                    <div class="comment-content">{{comment.content}}</div>
                     <br>
                     {% if user.is_authenticated %}
                     <div class="comment">
                         <button onclick="showReplies('comment{{comment.id}}')">Reply</button>
                     </div>
+                    {% endif %}
+                    {% if user.is_authenticated and user == comment.user.user %}
+                        <a href="{% url 'edit_comment' comment.id post.slug %}" class="edit-comment">Edit</a>
                     {% endif %}
                 </div>
             </div>
@@ -99,7 +102,9 @@
                 <div class="content">
                     {{reply.content}}
                     <br>
-                    
+                    {% if user.is_authenticated and user == reply.user.user %}
+                        <a href="{% url 'edit_reply' reply.id post.slug %}" class="edit-comment">Edit</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

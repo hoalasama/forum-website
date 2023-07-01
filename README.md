@@ -47,7 +47,7 @@ edit post :
 ##
 hide comment, reply area : ✅
 ##
-edit comment, reply :
+edit comment, reply : ✅
 ##
 view user info : ✅
 ##

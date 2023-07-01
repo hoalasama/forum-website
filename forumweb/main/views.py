@@ -129,3 +129,24 @@ def search_result(request):
 
     return render(request, 'search.html', context)
 
+def edit_comment(request, comment_id, post_slug):
+    comment = get_object_or_404(Comment, id=comment_id)
+    slug = post_slug
+    if request.method == 'POST':
+        new_content = request.POST.get('new_content')
+        comment.content = new_content
+        comment.save()
+        return redirect('detail', slug)
+
+    return render(request, 'register/editcomment.html', {'comment': comment})
+
+def edit_reply(request, reply_id, post_slug):
+    comment = get_object_or_404(Reply, id=reply_id)
+    slug = post_slug
+    if request.method == 'POST':
+        new_content = request.POST.get('new_content')
+        comment.content = new_content
+        comment.save()
+        return redirect('detail', slug)
+
+    return render(request, 'register/editreply.html', {'reply': comment})

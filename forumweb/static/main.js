@@ -33,3 +33,22 @@ function hideReplies(id){
     var replyArea = document.getElementById(id);
     replyArea.classList.add("hide");
 }
+
+$(document).ready(function() {
+    $(".edit-comment").click(function(e) {
+        e.preventDefault();
+        $("#edit-comment-modal").show();
+    });
+});
+
+$(document).ready(function() {
+    $(".edit-comment").click(function(e) {
+        e.preventDefault();
+        $("#edit-comment-modal").show();
+    });
+
+    $("#edit-comment-modal").on("submit", "form", function(e) {
+        e.preventDefault();
+        $("#edit-comment-modal").hide();
+    });
+});

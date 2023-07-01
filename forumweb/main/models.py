@@ -9,7 +9,6 @@ from taggit.managers import TaggableManager
 from django.shortcuts import reverse
 
 
-
 User = get_user_model()
 
 class Author(models.Model):
@@ -67,7 +66,6 @@ class Reply(models.Model):
     class Meta:
         verbose_name_plural = "replies"
 
-    
 class Comment(models.Model):
     user = models.ForeignKey(Author, on_delete=models.CASCADE)
     content = models.TextField()
