@@ -55,9 +55,11 @@ edit user info : ✅
 ##
 view user in post, comment, reply : ✅
 ##
+show tag in post : ✅
+##
 upvote, downvote :
 ##
-posts with tag list :
+posts with tag list : ✅
 ##
 change language :
 ##

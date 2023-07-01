@@ -150,3 +150,9 @@ def edit_reply(request, reply_id, post_slug):
         return redirect('detail', slug)
 
     return render(request, 'register/editreply.html', {'reply': comment})
+
+
+def tagged_posts(request, tag_slug):
+    tag = tag_slug.split('/')[-1]
+    posts = Post.objects.filter(tags__slug=tag_slug)
+    return render(request, 'tagged_posts.html', {'tag': tag,'posts': posts})
