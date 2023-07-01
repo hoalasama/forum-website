@@ -98,6 +98,11 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
+    def get_vote_count(self):
+        upvotes = Vote.objects.filter(post=self, activity_type=Vote.UP_VOTE).count()
+        downvotes = Vote.objects.filter(post=self, activity_type=Vote.DOWN_VOTE).count()
+        return upvotes - downvotes
+    
     def get_url(self):
         return reverse("detail", kwargs={
             "slug":self.slug
@@ -110,3 +115,18 @@ class Post(models.Model):
     @property
     def last_reply(self):
         return self.comments.latest("date")
+    
+class Vote(models.Model):
+    UP_VOTE = 'U'
+    DOWN_VOTE = 'D'
+    ACTIVITY_TYPES = (
+        (UP_VOTE, 'Up Vote'),
+        (DOWN_VOTE, 'Down Vote'),
+    )
+
+    user = models.ForeignKey(Author, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)  
+    activity_type = models.CharField(max_length=1, choices=ACTIVITY_TYPES)
+
+    class Meta:
+        unique_together = ('user', 'post')

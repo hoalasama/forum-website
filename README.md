@@ -57,7 +57,8 @@ view user in post, comment, reply : ✅
 ##
 show tag in post : ✅
 ##
-upvote, downvote :
+upvote, downvote : user can upvote and downvote, but cant cancel it, your vote be there forever
+here some document for upvote, downvote: https://simpleisbetterthancomplex.com/tutorial/2016/10/13/how-to-use-generic-relations.html
 ##
 posts with tag list : ✅
 ##
@@ -65,7 +66,11 @@ change language :
 ##
 following the post :
 ##
-notification on following post :
+notification for new comment in following post :
+##
+notification when someone reply your comment : 
+##
+notification on new reply in comment that you replied :
 ##
 report post, category, bug :
 ##

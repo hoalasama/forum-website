@@ -26,6 +26,15 @@
                     <div>Posts: <u>{{comment.user.num_posts}}</u></div>
                     <div>Points: <u>{{comment.user.points}}</u></div>
                 </div>
+                <div>
+                    {% if user.is_authenticated %}
+                        {% with user_vote=post.get_user_vote %}
+                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="window.location.href='{% url 'upvote' post.id %}'">Upvote</button>
+                            <h1>{{ post.get_vote_count }}</h1>
+                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="window.location.href='{% url 'downvote' post.id %}'">Downvote</button>
+                        {% endwith %}
+                    {% endif %}
+                </div>
                 <div class="content">
                     {{post.content|safe}}
                     <div>

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Author, Category, Comment, Post, Reply
+from .models import Author, Category, Comment, Post, Reply, Vote
 from .utils import update_views
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
@@ -9,13 +9,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from django.urls import reverse
+from django.contrib import messages
 
 def home(request):
     forums = Category.objects.all()
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
-    last_post = Post.objects.latest("date")
+    try:
+        last_post = Post.objects.latest("date")
+    except Post.DoesNotExist:
+        last_post = None
 
     context = {
         "forums":forums,
@@ -29,9 +33,11 @@ def home(request):
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug = slug)
+    post = Post.objects.get(pk=post.id)
+
     author = None
     if request.user.is_authenticated:
-        author = Author.objects.get(user=request.user)
+        author = Author.objects.get(user=request.user)  
     if request.method == "POST":
         if "comment-form" in request.POST:
             comment = request.POST.get("comment")
@@ -47,7 +53,7 @@ def detail(request, slug):
 
     context = {
         "post":post,
-        "title": post.title
+        "title": post.title,
     }
     update_views(request, post)
 
@@ -106,7 +112,7 @@ def delete_post(request, post_id=None):
     return render(request, 'delete_post.html', context)
     #url = reverse('delete_post', args=[post_id])
 def my_view(request, post_id):
-    post_id = Post.objects.get(id=post_id)
+    post_id = get_object_or_404(Post, id=post_id)
     url = reverse('delete_post', args=[post_id])
 
 def latest_posts(request):
@@ -156,3 +162,29 @@ def tagged_posts(request, tag_slug):
     tag = tag_slug.split('/')[-1]
     posts = Post.objects.filter(tags__slug=tag_slug)
     return render(request, 'tagged_posts.html', {'tag': tag,'posts': posts})
+
+@login_required
+def upvote(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    author = Author.objects.get(user=user.id)
+    vote, created = Vote.objects.get_or_create(user=author, post=post)
+    
+    if created or vote.activity_type == Vote.DOWN_VOTE[0]:
+        vote.activity_type = Vote.UP_VOTE[0]
+        vote.save()
+    
+    return redirect(request.META.get('HTTP_REFERER', ''))
+
+@login_required
+def downvote(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = request.user
+    author = Author.objects.get(user=user.id)
+    vote, created = Vote.objects.get_or_create(user=author, post=post)
+    
+    if created or vote.activity_type == Vote.UP_VOTE[0]:
+        vote.activity_type = Vote.DOWN_VOTE[0]
+        vote.save()
+    
+    return redirect(request.META.get('HTTP_REFERER', ''))

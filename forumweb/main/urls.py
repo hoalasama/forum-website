@@ -13,5 +13,7 @@ urlpatterns = [
     path("search/", search_result, name="search_result"),
     path("comment/edit/<int:comment_id>/<post_slug>", edit_comment, name="edit_comment"),
     path("reply/edit/<int:reply_id>/<post_slug>", edit_reply, name="edit_reply"),
-     path('tagged/<slug:tag_slug>/', tagged_posts, name='tagged_posts'),
+    path("tagged/<slug:tag_slug>/", tagged_posts, name="tagged_posts"),
+    path('upvote/<int:post_id>/', views.upvote, name='upvote'),
+    path('downvote/<int:post_id>/', views.downvote, name='downvote'),
 ]

@@ -37,7 +37,20 @@
             MyForum - Stats &nbsp;<i class="fa fa-bar-chart"></i>
         </div>
         <span><u>{{num_posts}}</u> Posts in <u>{{num_categories}}</u> Topics by <u>{{num_users}}</u> Members.</span><br>
-        <span>Latest post: <b><a href="{{last_post.get_url}}">{{last_post.title}}</a></b> on {{last_post.date|date}} By <a href="{% url 'other_profile' last_post.user.slug %}">{{last_post.user.fullname|title}}</a></span>.<br>
+        <span>Latest post: 
+        <b>
+            {% if last_post.user.slug %}
+                <a href="{{last_post.get_url}}">{{last_post.title}}</a>
+            {% else %}
+                {{ last_post.title }}
+            {% endif %}
+        </b> on 
+        {{last_post.date|date}} By 
+        {% if last_post.user.slug %}
+            <a href="{% url 'other_profile' last_post.user.slug %}">{{last_post.user.fullname|title}}</a></span>.<br>
+        {% else %}
+            {{ last_post.user.fullname|title }}
+        {% endif %}
         <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
     </div>
 
