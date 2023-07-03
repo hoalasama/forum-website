@@ -43,7 +43,7 @@ expected function
 ##
 search : ✅
 ##
-edit post : 
+edit post : ✅
 ##
 hide comment, reply area : ✅
 ##
