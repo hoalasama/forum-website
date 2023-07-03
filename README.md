@@ -62,6 +62,8 @@ here some document for upvote, downvote: https://simpleisbetterthancomplex.com/t
 ##
 posts with tag list : ✅
 ##
+post, comment, reply with picture : 
+##
 change language :
 ##
 following the post :
@@ -78,4 +80,21 @@ report post, category, bug :
 ##
 user point for ranking :
 ##
+advanced function 
+##
+use chatgpt to correct the user post, comment, reply :  
+##
+bot answer user post :
+##
+click on IT keyword in post, comment, reply to see meaning of it : 
+##
+(if possible) English test automatically generated base on user previous test:
+##
+user can save words that easy to forget : 
+##
+click on the word to hear it : 
+##
+(optional) reward by cash monthly to top 3 user by point :
+##
 
+##
