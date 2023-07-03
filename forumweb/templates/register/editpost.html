@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>Title:</label>
+        <input type="text" name="new_title" value="{{ post.title }}">
+        
+        <label>Post content:</label>
+        <textarea name="new_content">{{ post.content }}</textarea>
+
+        <label>Tags:</label>
+        <input type="text" name="tags" value="{{ post.tags.names|join:', ' }}">
+
+        <button type="submit">Save</button>
+        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
+    </form>
+{% endblock %}

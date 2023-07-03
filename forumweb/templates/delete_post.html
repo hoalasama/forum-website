@@ -8,6 +8,7 @@
     {% csrf_token %}
     <strong>Are u sure</strong>
     <button type="submit">delete</button>
+    <a href="{{request.META.HTTP_REFERER}}">back</a>
 </form>
 {% endif %}
 {% endblock content %}

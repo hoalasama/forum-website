@@ -34,7 +34,7 @@ function hideReplies(id){
     replyArea.classList.add("hide");
 }
 
-$(document).ready(function() {
+/*$(document).ready(function() {
     $(".edit-comment").click(function(e) {
         e.preventDefault();
         $("#edit-comment-modal").show();
@@ -51,4 +51,14 @@ $(document).ready(function() {
         e.preventDefault();
         $("#edit-comment-modal").hide();
     });
-});
+});*/
+
+$(window).load(function(){
+    if ($('#refreshed').val() == "false") {
+      $('#refreshed').val("true"); 
+    }
+    else {
+      $('#refreshed').val("false");
+      location.reload();
+    }
+  });

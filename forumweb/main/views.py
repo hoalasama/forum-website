@@ -10,6 +10,9 @@ from django.shortcuts import render
 from django.views import View
 from django.urls import reverse
 from django.contrib import messages
+from django.http import HttpResponse
+from django.http import JsonResponse
+
 
 def home(request):
     forums = Category.objects.all()
@@ -110,7 +113,7 @@ def delete_post(request, post_id=None):
         'user' : request.user,
     }
     return render(request, 'delete_post.html', context)
-    #url = reverse('delete_post', args=[post_id])
+
 def my_view(request, post_id):
     post_id = get_object_or_404(Post, id=post_id)
     url = reverse('delete_post', args=[post_id])
@@ -135,6 +138,25 @@ def search_result(request):
 
     return render(request, 'search.html', context)
 
+@login_required
+def edit_post(request, post_id, post_slug):
+    post = get_object_or_404(Post, id=post_id)
+    slug = post_slug
+    if request.method == 'POST':
+        post.title = request.POST.get('new_title')
+        post.content = request.POST.get('new_content')
+
+        post.tags.clear()
+        tags = request.POST.get('tags')
+        if tags:
+            tag_list = [tag.strip() for tag in tags.split(',')]
+            post.tags.add(*tag_list)
+        post.save()
+        return redirect('detail', slug)
+    
+    return render(request, 'register/editpost.html', {'post': post})
+
+@login_required
 def edit_comment(request, comment_id, post_slug):
     comment = get_object_or_404(Comment, id=comment_id)
     slug = post_slug
@@ -146,6 +168,7 @@ def edit_comment(request, comment_id, post_slug):
 
     return render(request, 'register/editcomment.html', {'comment': comment})
 
+@login_required
 def edit_reply(request, reply_id, post_slug):
     comment = get_object_or_404(Reply, id=reply_id)
     slug = post_slug
@@ -175,7 +198,8 @@ def upvote(request, post_id):
         vote.save()
     
     return redirect(request.META.get('HTTP_REFERER', ''))
-
+    
+    
 @login_required
 def downvote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -188,3 +212,4 @@ def downvote(request, post_id):
         vote.save()
     
     return redirect(request.META.get('HTTP_REFERER', ''))
+

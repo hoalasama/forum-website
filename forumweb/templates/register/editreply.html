@@ -5,6 +5,7 @@
         {% csrf_token %}
         <textarea name="new_content">{{ reply.content }}</textarea>
         <button type="submit">Save</button>
+        <a href="{{request.META.HTTP_REFERER}}">back</a>
     </form>
 
 {% endblock %}
