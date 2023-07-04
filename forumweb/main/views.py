@@ -197,7 +197,9 @@ def upvote(request, post_id):
         vote.activity_type = Vote.UP_VOTE[0]
         vote.save()
     
-    return redirect(request.META.get('HTTP_REFERER', ''))
+    vote_count = post.get_vote_count()
+    #return redirect(request.META.get('HTTP_REFERER', ''))
+    return JsonResponse({'vote_count': vote_count})
     
     
 @login_required
@@ -211,5 +213,7 @@ def downvote(request, post_id):
         vote.activity_type = Vote.DOWN_VOTE[0]
         vote.save()
     
-    return redirect(request.META.get('HTTP_REFERER', ''))
+    vote_count = post.get_vote_count()
+    #return redirect(request.META.get('HTTP_REFERER', ''))
+    return JsonResponse({'vote_count': vote_count})
 

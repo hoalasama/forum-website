@@ -30,9 +30,9 @@
                 <div>
                     {% if user.is_authenticated %}
                         {% with user_vote=post.get_user_vote %}
-                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="window.location.href='{% url 'upvote' post.id %}'">Upvote</button>
-                            <h1>{{ post.get_vote_count }}</h1>
-                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="window.location.href='{% url 'downvote' post.id %}'">Downvote</button>
+                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="upvotePost({{ post.id }})">Upvote</button>
+                            <h1 id="vote-count-{{ post.id }}">{{ post.get_vote_count }}</h1>
+                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="downvotePost({{ post.id }})">Downvote</button>
                         {% endwith %}
                     {% endif %}
                 </div>
@@ -128,10 +128,38 @@
 
         {% endfor %}
 
-
-       
-
-        
-
     </div>
+    <script>
+        function upvotePost(postId) {
+            var scrollTop = $(window).scrollTop();
+            $.ajax({
+                url: "{% url 'upvote' 0 %}".replace('0', postId),
+                method: "GET",
+                success: function(response) {
+                    $('#vote-count-' + postId).html(response.vote_count);
+                    $(window).scrollTop(scrollTop);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        
+        function downvotePost(postId) {
+            var scrollTop = $(window).scrollTop();
+            $.ajax({
+                url: "{% url 'downvote' 0 %}".replace('0', postId),
+                method: "GET",
+                success: function(response) {
+                    $('#vote-count-' + postId).html(response.vote_count);
+                    $(window).scrollTop(scrollTop);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+
+
     {% endblock content %}
