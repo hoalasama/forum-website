@@ -33,6 +33,44 @@ h1{
     padding: 20px;
 }
 
+.round-button {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: #2d2b2b;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border: solid 1px #000000;
+  }
+
+.round-button:hover {
+    background-color: #999;
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid rgb(255, 255, 255);
+    display: inline-block;
+    position: relative;
+    top: -4px;
+  }
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 8px solid rgb(255, 255, 255);
+    display: inline-block;
+    position: relative;
+    top: -2px;
+  }
+
 .subforum{
     margin-top:20px;
 }
@@ -134,7 +172,7 @@ header{
     align-items: center;
 }
 .navigation{
-    background-color:#52057b;
+    background-color:#4e4d4f;
     padding: 10px;
     width: 65%;
     display: inline-block;
@@ -221,12 +259,11 @@ header{
 
   /* Search Box styles */
 .search-box{
-    border: solid 1px #52057b;
+    border: solid 1px #ffffff;
     margin-top: 20px;
     padding: 40px;
     display:flex;
     justify-content: center;
-    box-shadow:1px 2px 3px #52057b;
 }
 
 .search-box select{
@@ -246,7 +283,6 @@ header{
 .search-box button:hover{
     background-color: #000000;
     color: #fff;
-    box-shadow: 1px 2px 3px #fff;
 }
 
 /* search box for smrtphones */

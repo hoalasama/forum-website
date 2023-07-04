@@ -27,16 +27,16 @@
                     <div>Posts: <u>{{comment.user.num_posts}}</u></div>
                     <div>Points: <u>{{comment.user.points}}</u></div>
                 </div>
-                <div>
+                <div style="display:inline-block; margin-right:20px;">
                     {% if user.is_authenticated %}
                         {% with user_vote=post.get_user_vote %}
-                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="upvotePost({{ post.id }})">Upvote</button>
-                            <h1 id="vote-count-{{ post.id }}">{{ post.get_vote_count }}</h1>
-                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="downvotePost({{ post.id }})">Downvote</button>
+                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="upvotePost({{ post.id }})" class="round-button"><span class="triangle-up"></span></button>
+                            <h1 id="vote-count-{{ post.id }}" style="display: flex; justify-content: center;">{{ post.get_vote_count }}</h1>
+                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="downvotePost({{ post.id }})" class="round-button"><span class="triangle-down"></span></button>
                         {% endwith %}
                     {% endif %}
                 </div>
-                <div class="content">
+                <div class="content" style="display:inline-block;">
                     {{post.content|safe}}
                     <div>
                     {% for tag in post.tags.all %}
@@ -61,7 +61,7 @@
             <div class="comment-area hide" id="comment-area">
                 <textarea name="comment" id="" placeholder="comment here ... "></textarea>
                 <input type="submit" value="submit" name="comment-form">
-                <button onclick="hideComment()">Hide</button>
+                <button id="hide-button">Hide</button>
             </div>
         </form>
         
@@ -99,7 +99,7 @@
                 <textarea name="reply" id="" placeholder="reply here ... "></textarea>
                 <input type="submit" value="submit" name="reply-form">
                 <input type="hidden" name="comment-id" value="{{comment.id}}">
-                <button onclick="hideReplies('comment{{comment.id}}')">Hide</button>
+                <button onclick="hideReplies(event, 'comment{{comment.id}}')">Hide</button>
             </div>
         </form>
         

@@ -19,17 +19,19 @@ function showComment(){
     commentArea.classList.remove("hide");
 }
 
-function hideComment(){
+document.getElementById("hide-button").addEventListener("click", function(event) {
+    event.preventDefault();
     var commentArea = document.getElementById("comment-area");
     commentArea.classList.add("hide");
-}
+});
 //Reply
 function showReplies(id){
     var replyArea = document.getElementById(id);
     replyArea.classList.remove("hide");
 }
 
-function hideReplies(id){
+function hideReplies(event, id){
+    event.preventDefault();
     var replyArea = document.getElementById(id);
     replyArea.classList.add("hide");
 }
