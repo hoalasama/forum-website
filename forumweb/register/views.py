@@ -6,6 +6,7 @@ from register.forms import UpdateForm
 from django.contrib.auth import logout as lt
 from main.models import Author
 from django.contrib.auth.models import User
+from register.checkprofile import profile_completion_required
 
 
 def signup(request):
@@ -56,6 +57,8 @@ def update_profile(request):
         "title": "Update Profile",
     })
     return render(request, "register/update.html", context)
+
+@profile_completion_required
 @login_required
 def view_profile(request):
     user = request.user
@@ -74,12 +77,13 @@ def logout(request):
     lt(request)
     return redirect("home")
 
+@profile_completion_required
 @login_required
 def edit_profile(request):
-    author = Author.objects.get(user=request.user)
+    author = get_object_or_404(Author, user=request.user)
 
     if request.method == 'POST':
-        form = UpdateForm(request.POST, instance=author)
+        form = UpdateForm(request.POST, request.FILES, instance=author)
         if form.is_valid():
             form.save()
             return redirect('view_profile')

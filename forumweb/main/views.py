@@ -12,8 +12,9 @@ from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponse
 from django.http import JsonResponse
+from register.checkprofile import profile_completion_required
 
-
+@profile_completion_required
 def home(request):
     forums = Category.objects.all()
     num_posts = Post.objects.all().count()
@@ -81,6 +82,7 @@ def posts(request, slug):
 
     return render(request, "posts.html", context)
 
+@profile_completion_required
 @login_required
 def create_post(request):
     context = {}
@@ -98,6 +100,7 @@ def create_post(request):
         "title": "Create New Post"
     })
     return render(request, "create_post.html", context)
+
 @login_required
 def delete_post(request, post_id=None):
     post_to_delete = get_object_or_404(Post, id=post_id)
@@ -127,6 +130,7 @@ def latest_posts(request):
 
     return render(request, "latest-posts.html", context)
 
+@profile_completion_required
 def search_result(request):
     query = request.GET.get('query', '')
     results = Post.objects.filter(title__icontains=query)

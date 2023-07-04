@@ -3,7 +3,7 @@
 {% block content %}
     <div class="profile-container">
         <h1 style="text-align:center; margin-block:50px; color:red;">Full Name : {{author.fullname}}</h1>
-        <img src="{{ author.profile_pic.url }}" alt="Profile Picture">
+        <img src="{{ author.profile_pic.url }}" alt="Profile Picture" style="display: block; margin-left: auto; margin-right: auto;">
         <h1 style="text-align:center; margin-block:50px; color:red;">Bio : {{author.bio}}</h1>
     </div>
 {% endblock %}
