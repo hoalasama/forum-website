@@ -86,7 +86,7 @@ def posts(request, slug):
 @login_required
 def create_post(request):
     context = {}
-    form = PostForm(request.POST or None)
+    form = PostForm(request.POST or None, request.FILES or None)
     if request.method == "POST":
         if form.is_valid():
             author = Author.objects.get(user=request.user)

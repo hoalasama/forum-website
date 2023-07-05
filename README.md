@@ -38,7 +38,9 @@ password :
 lmaolmao
 ```
 front-end : static, templates
-
+##
+when picking a function to do, add "your-name is working on" after the function, EX  "search : lmao is working on"
+##
 expected function
 ##
 search : ✅
@@ -57,14 +59,14 @@ view user in post, comment, reply : ✅
 ##
 show tag in post : ✅
 ##
-upvote, downvote : user can upvote and downvote, but cant cancel it, your vote be there forever
+upvote, downvote : user can upvote and downvote, but cant cancel it, 
 here some document for upvote, downvote: https://simpleisbetterthancomplex.com/tutorial/2016/10/13/how-to-use-generic-relations.html
 ##
 posts with tag list : ✅
 ##
 keep scroll position after voting : ✅
 ##
-post, comment, reply with picture : 
+post with picture : ✅
 ##
 change language :
 ##

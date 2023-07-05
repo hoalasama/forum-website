@@ -83,6 +83,8 @@ class Post(models.Model):
     categories = models.ManyToManyField(Category)
     date = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='post_images', blank=True, null=True)
+
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
     )
