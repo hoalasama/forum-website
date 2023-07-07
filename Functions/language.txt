@@ -1,0 +1,35 @@
+Dưới đây là hướng dẫn chi tiết để thêm chức năng đa ngôn ngữ vào trang web Django của bạn:
+
+Cấu hình ngôn ngữ trong Django:
+
+Mở tệp settings.py trong dự án Django của bạn.
+Đảm bảo rằng LANGUAGE_CODE được định cấu hình đúng cho ngôn ngữ mặc định. Ví dụ: LANGUAGE_CODE = 'en-us'.
+Thêm ngôn ngữ khác vào danh sách LANGUAGES. Ví dụ: LANGUAGES = [('en', 'English'), ('vi', 'Tiếng Việt')].
+Đảm bảo rằng django.middleware.locale.LocaleMiddleware và django.contrib.sessions.middleware.SessionMiddleware được thêm vào danh sách MIDDLEWARE.
+Tạo tệp ngôn ngữ dịch:
+
+Mở terminal và điều hướng đến thư mục gốc của dự án Django.
+Chạy lệnh python manage.py makemessages -l en để tạo tệp ngôn ngữ dịch cho ngôn ngữ tiếng Anh. Thay en bằng mã ngôn ngữ của ngôn ngữ mong muốn.
+Chỉnh sửa tệp .po được tạo trong thư mục locale/en/LC_MESSAGES bằng cách thêm các dịch cho các chuỗi cần dịch.
+Lưu và đóng tệp .po.
+Sử dụng các chuỗi dịch trong templates:
+
+Trong các tệp template của bạn, bọc các chuỗi cần dịch bằng các thẻ {% trans %} hoặc {{ _('...') }}.
+Ví dụ: <h1>{% trans "Welcome to my website" %}</h1>
+Cập nhật tệp ngôn ngữ dịch:
+
+Sau khi thêm hoặc thay đổi các chuỗi cần dịch trong mã nguồn của bạn, chạy lệnh python manage.py compilemessages để cập nhật tệp ngôn ngữ dịch.
+Điều này sẽ tạo tệp .mo trong thư mục locale/en/LC_MESSAGES.
+Chuyển đổi ngôn ngữ:
+
+Bạn có thể tạo một dropdown hoặc các nút để cho phép người dùng chuyển đổi ngôn ngữ.
+Khi người dùng chọn ngôn ngữ mới, bạn có thể lưu ngôn ngữ được chọn vào session hoặc cookie.
+Sử dụng giá trị ngôn ngữ đã lưu để đặt lại ngôn ngữ cho yêu cầu tiếp theo.
+Hiển thị chuỗi dịch trong views:
+
+Khi render các view trong Django, hãy chuyển chuỗi cần dịch qua hàm gettext hoặc ugettext để đảm bảo việc dịch.
+Ví dụ: return render(request, 'index.html', {'welcome_message': _('Welcome to my website')})
+Kiểm tra lại trang web:
+
+Khởi động lại máy chủ phát triển Django của bạn và kiểm tra lại trang web.
+Khi ngôn ngữ hiện tại được chọn, các chuỗi cần dịch sẽ được hiển thị theo ngôn ngữ tương ứng.
