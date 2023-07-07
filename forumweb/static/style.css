@@ -24,7 +24,6 @@ h1{
 }
 
 
-
 /* ########################################### */
 /*           Forums.html                       */
 /* ########################################### */
@@ -174,7 +173,7 @@ header{
 .navigation{
     background-color:#4e4d4f;
     padding: 10px;
-    width: 65%;
+    width: 100%;
     display: inline-block;
     border-radius: 5px;
     max-height: 80px;
@@ -188,15 +187,15 @@ header{
 }
 
 .nav-list{
+    display: flex;
     list-style-type:none;
-    overflow: hidden;
+    overflow: none;
 }
 
 .nav-item a{
-    float: right;
-    display:block;
+    display: inline-block;
     text-align: center;
-    margin-inline: 20px;
+    margin-inline: 10px;
     font-size: 20px;
     padding: 10px;
     color:#fff;
@@ -236,7 +235,7 @@ header{
     }
     
     .close-icon i{
-        font-size:30px;
+        font-size:20px;
     }
     
     .nav-item a{

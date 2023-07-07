@@ -2,14 +2,22 @@
 function hideIconBar(){
     var iconBar = document.getElementById("iconBar");
     var navigation = document.getElementById("navigation");
+    var myforum = document.getElementById("myforum");
+    var createpost = document.getElementById("createpost");
     iconBar.setAttribute("style", "display:none;");
+    myforum.classList.add("hide");
+    createpost.classList.add("hide");
     navigation.classList.remove("hide");
 }
 
 function showIconBar(){
     var iconBar = document.getElementById("iconBar");
     var navigation = document.getElementById("navigation");
+    var myforum = document.getElementById("myforum");
+    var createpost = document.getElementById("createpost")
     iconBar.setAttribute("style", "display:block;");
+    myforum.classList.remove("hide");
+    createpost.classList.remove("hide");
     navigation.classList.add("hide");
 }
 
@@ -64,4 +72,5 @@ $(window).load(function(){
       location.reload();
     }
   });
+
 
