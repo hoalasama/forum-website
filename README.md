@@ -68,7 +68,7 @@ keep scroll position after voting : ✅
 ##
 post with picture : ✅
 ##
-change language :
+change language : guide : https://djangowaves.com/tutorial/multiple-languages-in-Django/
 ##
 following the post :
 ##
