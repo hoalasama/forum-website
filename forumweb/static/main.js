@@ -4,8 +4,10 @@ function hideIconBar(){
     var navigation = document.getElementById("navigation");
     var myforum = document.getElementById("myforum");
     var createpost = document.getElementById("createpost");
+    var search = document.getElementById("searching");
     iconBar.setAttribute("style", "display:none;");
     myforum.classList.add("hide");
+    search.classList.add("hide");
     createpost.classList.add("hide");
     navigation.classList.remove("hide");
 }
@@ -15,8 +17,10 @@ function showIconBar(){
     var navigation = document.getElementById("navigation");
     var myforum = document.getElementById("myforum");
     var createpost = document.getElementById("createpost")
+    var search = document.getElementById("searching")
     iconBar.setAttribute("style", "display:block;");
     myforum.classList.remove("hide");
+    search.classList.remove("hide");
     createpost.classList.remove("hide");
     navigation.classList.add("hide");
 }

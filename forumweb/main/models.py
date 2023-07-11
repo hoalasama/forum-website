@@ -7,6 +7,7 @@ from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
+from django.utils.crypto import get_random_string
 
 
 User = get_user_model()
@@ -94,7 +95,9 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            base_slug = slugify(self.title)
+            random_string = get_random_string(length=4)
+            self.slug = f"{base_slug}-{random_string}"
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -110,6 +113,9 @@ class Post(models.Model):
             "slug":self.slug
         })
     
+    class Meta:
+        ordering = ['-date']
+
     @property
     def num_comments(self):
         return self.comments.count()

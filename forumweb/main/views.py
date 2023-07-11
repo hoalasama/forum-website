@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import JsonResponse
 from register.checkprofile import profile_completion_required
+from django.db.models import Q
 
 @profile_completion_required
 def home(request):
@@ -20,17 +21,39 @@ def home(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
+    #posts = Post.objects.all()
+    
+    page = request.GET.get("page")
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    posts = Post.objects.filter(
+        Q(categories__title__icontains=q) |
+        Q(title__icontains=q) |
+        Q(content__icontains=q)
+    )
+
+    paginator = Paginator(posts, 5)
+
     try:
         last_post = Post.objects.latest("date")
     except Post.DoesNotExist:
         last_post = None
 
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+        
     context = {
         "forums":forums,
         "num_posts":num_posts,
         "num_users":num_users,
         "num_categories":num_categories,
         "last_post":last_post,
+        "posts" : posts,
+        "q" : q,
         "title": "Home Page"
     }
     return render(request, "forums.html", context)
