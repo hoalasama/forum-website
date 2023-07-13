@@ -9,30 +9,30 @@
 
             <div id="collum2">
 
-        <div class="mobile-category">
-            {% include 'category.html' %}
-        </div>
+            <div class="mobile-category">
+                {% include 'category.html' %}
+            </div>
 
             {% for post in posts %}
-                <div class="head">
-                    <div class="authors">Author</div>
-                    <div class="content">Topic: <a href="{{post.get_url}}">{{post.title}}</a> <span>(Read {% get_hit_count for post %} Times)</span>
-                        <span>
-                            {% for category in post.categories.all %}
-                                {{ category.title }}
-                            {% endfor %}
-                        </span>
-                    </div>
-                    {% if user.is_authenticated and user == post.user.user %}
-                    <a href="{% url 'edit_post' post.id post.slug %}" class="edit-post" style="display:inline-block; margin-right:20px;">Edit</a>
-                    <a href="{% url 'delete_post' post.id %}" class="delete-post" style="display:inline-block;">Delete</a>    
-                    {% endif %}
+            <div class="head">
+                <div class="authors">Author</div>
+                <div class="content">Topic: <a href="{{post.get_url}}">{{post.title}}</a><!-- <span>(Read {% get_hit_count for post %} Times)</span>-->
+                    <!--<span>
+                        {% for category in post.categories.all %}
+                        {{ category.title }}
+                        {% endfor %}
+                    </span>-->
                 </div>
-
+                {% if user.is_authenticated and user == post.user.user %}
+                <a href="{% url 'edit_post' post.id post.slug %}" class="edit-post" style="display:inline-block; margin-right:20px;">Edit</a>
+                <a href="{% url 'delete_post' post.id %}" class="delete-post" style="display:inline-block;">Delete</a>    
+                {% endif %}
+            </div>
+            
                 <div class="body">
                     <div class="authors">
                         <div class="username"><a href="{% url 'other_profile' post.user.slug %}">{{post.user.fullname|title}}</a></div>
-                        <div>Role</div>
+                        <!--<div>Role</div>-->
                         <img src="{{post.user.profile_pic.url}}" alt="">
                         <div>Posts: <u>{{comment.user.num_posts}}</u></div>
                         <div>Points: <u>{{comment.user.points}}</u></div>
@@ -54,10 +54,13 @@
                         {% endfor %}
                         </div>
                         {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; max-height: 400px;">
+                        <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 80%; max-height: 300px;">
                         {% endif %}
                         
                     </div>
+                </div>
+                <div class="bottom">
+                    <span> {% get_hit_count for post %} views <br> {{post.num_comments}} comments</span>
                     <div class="info-bottom-right">
                         {% for category in post.categories.all %}
                             {{ category.title }}
@@ -75,7 +78,7 @@
                     
                     {% for num_page in posts.paginator.page_range %}
                         {% if num_page == posts.number %}
-                            <a href="?page={{ num_page }}&q={{ q }}" class="current-page" style="color: red;">{{ num_page }}</a>
+                            <a href="?page={{ num_page }}&q={{ q }}" class="current-page" style="color: #71c6dd;">{{ num_page }}</a>
                         {% else %}
                             <!--<a href="?page={{ num_page }}&q={{ q }}">{{ num_page }}</a>-->
                         {% endif %}

@@ -196,6 +196,17 @@ def edit_comment(request, comment_id, post_slug):
     return render(request, 'register/editcomment.html', {'comment': comment})
 
 @login_required
+def delete_comment(request, comment_id, post_slug):
+    comment = get_object_or_404(Comment, id=comment_id)
+    slug = post_slug
+    if request.method == 'POST':
+        comment.replies.all().delete()
+        comment.delete()
+        return redirect('detail', slug)
+    
+    return render(request, 'delete_comment.html', {'comment': comment})
+
+@login_required
 def edit_reply(request, reply_id, post_slug):
     comment = get_object_or_404(Reply, id=reply_id)
     slug = post_slug
@@ -207,6 +218,15 @@ def edit_reply(request, reply_id, post_slug):
 
     return render(request, 'register/editreply.html', {'reply': comment})
 
+@login_required
+def delete_reply(request, reply_id, post_slug):
+    comment = get_object_or_404(Reply, id=reply_id)
+    slug = post_slug
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('detail', slug)
+    
+    return render(request, 'delete_reply.html', {'comment': comment})
 
 def tagged_posts(request, tag_slug):
     tag = tag_slug.split('/')[-1]

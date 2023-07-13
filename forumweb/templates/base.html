@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <!--NavBar Section-->
         <div class="navbar">
             <nav class="navigation hide" id="navigation">
@@ -33,13 +33,13 @@
                 </ul>
             </nav>
             <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
-            <div class="brand" ><a id="myforum" style="color:white;" href="{% url 'home' %}">My Forum</a></div>
+            <div class="brand" ><a id="myforum" style="color:#b2bdbd;" href="{% url 'home' %}">My Forum</a></div>
             
             <div id="searching" class="">
                 <form action="{% url 'search_result' %}" role="form" method="GET">
                     <div class="search-box">
                         <div>                
-                            <input type="text" name="query" placeholder="search ...">
+                            <input type="text" name="query" placeholder="search ..." id="finding">
                             <!--<button type="submit" name="search"><i class="fa fa-search"></i></button>-->
                         </div>
                     </div>
@@ -48,11 +48,11 @@
 
             {% if user.is_authenticated %}
             {% endif %}
-            <div style="font-size:50px; font-weight:300px;"><a id="createpost" href="
+            <div style="font-size:18px; font-weight:300px; "><a style=" color:#696d97;" class="btn btn--main" id="createpost" href="
                 {% if user.is_authenticated %}
                 {% url 'create_post' %}
                 {% endif %}
-                ">+</a></div>
+                ">+ Create Post</a></div>
         </div>
 
     </header>

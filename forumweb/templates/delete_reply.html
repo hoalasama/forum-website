@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<h1 style="text-align:center; margin-block:50px; color:red;">{{user}}, Delete something</h1>
+{% if user.is_authenticated %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <strong>Are u sure</strong>
+    <button type="submit">delete</button>
+    <a href="{{request.META.HTTP_REFERER}}">back</a>
+</form>
+{% endif %}
+{% endblock content %}
