@@ -21,6 +21,7 @@ def home(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
+    author = get_object_or_404(Author, user=request.user)
     #posts = Post.objects.all()
     
     page = request.GET.get("page")
@@ -54,7 +55,8 @@ def home(request):
         "last_post":last_post,
         "posts" : posts,
         "q" : q,
-        "title": "Home Page"
+        "author": author,
+        "title": "Home Page",
     }
     return render(request, "forums.html", context)
 
@@ -62,7 +64,7 @@ def detail(request, slug):
     post = get_object_or_404(Post, slug = slug)
     post = Post.objects.get(pk=post.id)
 
-    author = None
+    author = get_object_or_404(Author, user=request.user)
     if request.user.is_authenticated:
         author = Author.objects.get(user=request.user)  
     if request.method == "POST":
@@ -81,6 +83,7 @@ def detail(request, slug):
     context = {
         "post":post,
         "title": post.title,
+        "author": author,
     }
     update_views(request, post)
 
