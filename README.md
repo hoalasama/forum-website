@@ -78,6 +78,8 @@ notification when someone reply your comment :
 ##
 notification on new reply in comment that you replied :
 ##
+role : 
+##
 report post, category, bug :
 ##
 (optional) show current popular posts :
@@ -100,5 +102,9 @@ click on the word to hear it :
 ##
 (optional) reward by cash monthly to top 3 user by point :
 ##
-
+provide grammar check, listening : 
+##
+alert in post when uploading if grammar is wrong : 
+##
+alert in comment when uploading if grammar is wrong : 
 ##
