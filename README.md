@@ -72,6 +72,8 @@ change language : guide : https://djangowaves.com/tutorial/multiple-languages-in
 ##
 following the post :
 ##
+online/ offline status : 
+##
 notification for new comment in following post :
 ##
 notification when someone reply your comment : 
