@@ -21,7 +21,7 @@ def home(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
-    author = get_object_or_404(Author, user=request.user)
+    
     #posts = Post.objects.all()
     
     page = request.GET.get("page")
@@ -55,7 +55,6 @@ def home(request):
         "last_post":last_post,
         "posts" : posts,
         "q" : q,
-        "author": author,
         "title": "Home Page",
     }
     return render(request, "forums.html", context)

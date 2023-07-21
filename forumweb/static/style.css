@@ -130,16 +130,25 @@ div {
     position: absolute;
     overflow: auto;
 }
+
+.fa-user-circle {
+    scale: 200%;
+    margin-right: 50px;
+    margin-bottom: 15px;
+}
   
 .dropdown:hover .dropdown-options {
     display: block;
+    pointer-events: auto;
 }
 
 .myforum {
     margin-left: 0;
 }
 
-
+#iconnav, #logo {
+    display:inline;
+}
 
 #ava {
     border-radius: 25px;
@@ -276,7 +285,14 @@ div {
     #collum2 {
         flex-basis: 100%;
       }
+    
+    #logo {
+        display:none;
+    }
 
+    #createpost {
+        font-size:10px;
+    }
   }
 
 /* For the tablets */

@@ -18,7 +18,7 @@ function showIconBar(){
     var myforum = document.getElementById("myforum");
     var createpost = document.getElementById("createpost")
     var search = document.getElementById("searching")
-    iconBar.setAttribute("style", "display:block;");
+    iconBar.setAttribute("style", "display:inline;");
     myforum.classList.remove("hide");
     search.classList.remove("hide");
     createpost.classList.remove("hide");
