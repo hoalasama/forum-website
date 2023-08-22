@@ -96,7 +96,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.title)
-            random_string = get_random_string(length=4)
+            random_string = get_random_string(length=8)
             self.slug = f"{base_slug}-{random_string}"
         super(Post, self).save(*args, **kwargs)
 

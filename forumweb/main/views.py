@@ -158,7 +158,12 @@ def latest_posts(request):
 @profile_completion_required
 def search_result(request):
     query = request.GET.get('query', '')
-    results = Post.objects.filter(title__icontains=query)
+    #results = Post.objects.filter(title__icontains=query)
+    results = Post.objects.filter(
+        Q(title__icontains=query) |  
+        Q(content__icontains=query) | 
+        Q(user__fullname__icontains=query)  
+    )
 
     context = {
         'query': query,
