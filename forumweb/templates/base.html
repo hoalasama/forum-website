@@ -75,10 +75,78 @@
         </div>
 
     </header>
+    <div class="fixed-button">
+        <a href="">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <div class="popup-overlay">
+        <div class="popup-content">
+            <button class="toggle-language">Change language</button>
+            <div class="translation-container">
+                <textarea class="source-text" placeholder="Input"></textarea>
+                
+                <textarea readonly class="translated-text" placeholder="Output"></textarea>
+            </div>
+            <button class="translate-button">Translate</button>
+            <button class="close-popup">X</button>
+        </div>
+    </div>
     {% block content %}
     {% endblock content %}
     
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var openButton = document.querySelector(".fixed-button a");
+            var overlay = document.querySelector(".popup-overlay");
+            var closeButton = document.querySelector(".close-popup");
+            var sourceText = document.querySelector(".source-text");
+            var translatedText = document.querySelector(".translated-text");
+            var translateButton = document.querySelector(".translate-button");
+            var toggleLanguageButton = document.querySelector(".toggle-language");
+            
+
+            var fromLanguage = "vi"; 
+            var toLanguage = "en";
+
+            openButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                overlay.style.display = "block"; 
+            });
+            
+            closeButton.addEventListener("click", function() {
+                overlay.style.display = "none"; 
+            });
+            
+            translateButton.addEventListener("click", function() {
+                var textToTranslate = sourceText.value; 
+                
+    
+                fetch(`https://api.mymemory.translated.net/get?q=${textToTranslate}&langpair=${fromLanguage}|${toLanguage}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.responseData) {
+                            translatedText.value = data.responseData.translatedText;
+                        } else {
+                            console.error("Translation failed");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error translating text: " + error);
+                    });
+            });
+            toggleLanguageButton.addEventListener("click", function() {
+                
+                var tempLanguage = fromLanguage;
+                fromLanguage = toLanguage;
+                toLanguage = tempLanguage;
         
+                
+                toggleLanguageButton.innerText = `${fromLanguage.toUpperCase()}  -> ${toLanguage.toUpperCase()}`;
+            });
+        });
+    </script>
 
     
     <script src="{% static 'main.js' %}"></script>

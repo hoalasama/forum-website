@@ -113,9 +113,9 @@
             {% endif %}
             <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
         </div>        
-
     </div>
     
+
     <script>
         function upvotePost(postId) {
             var scrollTop = $(window).scrollTop();
@@ -146,6 +146,9 @@
                 }
             });
         }
+        
+        
+
     </script>
 
     {% endblock content %}
