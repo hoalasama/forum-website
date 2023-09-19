@@ -32,6 +32,8 @@ INSTALLED_APPS = [
      'register',
      'crispy_forms',
      'crispy_bootstrap4',
+     'ckeditor',
+     'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -118,12 +120,33 @@ if DEBUG:
 else:
     STATIC_ROOT = BASE_DIR / 'static'
 
-# Default primary key field type
-#STATICFILES_DIRS = [BASE_DIR / 'static']
+    # Default primary key field type
+    #STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_ROOT  = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+    # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor"
+
+    #CKEDITOR_CONFIGS = {
+    #    'awesome_ckeditor': {
+    #        'toolbar': 'Basic',
+    #    },
+    #}
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source']
+        ]
+    }
+}

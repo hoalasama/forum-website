@@ -8,7 +8,6 @@
 
   <div class="posts-table">
     <div class="table-head">
-        <div class="status">Status</div>
         <div class="subjects">Subjects</div>
         <div class="replies">Replies/Views</div>
         <div class="last-reply">Last Reply</div>
@@ -16,7 +15,6 @@
 
       {% for post in posts %}
       <div class="table-row">
-        <div class="status"><i class="fa fa-hand-o-right"></i></div>
         <div class="subjects">
           <a href="{% url 'detail' post.slug %}">{{ post.title }}</a>
           <br>

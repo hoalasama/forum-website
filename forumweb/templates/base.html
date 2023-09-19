@@ -1,4 +1,10 @@
 {% load static %}
+
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+{{ block.super }}
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +46,7 @@
                 <form action="{% url 'search_result' %}" role="form" method="GET">
                     <div class="search-box">
                         <div>                
-                            <input type="text" name="query" placeholder="search ..." id="finding">
+                            <input type="text" name="query" placeholder="search ..." id="finding" style="color: white;">
                             <!--<button type="submit" name="search"><i class="fa fa-search"></i></button>-->
                         </div>
                     </div>
@@ -150,6 +156,9 @@
 
     
     <script src="{% static 'main.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
     <!--<script src="{% static 'jquery.js' %}"></script>-->
 </body>
 </html>

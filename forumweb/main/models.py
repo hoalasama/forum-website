@@ -8,7 +8,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
 from django.utils.crypto import get_random_string
-
+from django.core.validators import EmailValidator
 
 User = get_user_model()
 
@@ -16,8 +16,9 @@ class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=40, blank=True)
     slug = models.SlugField(max_length=400, unique=True, blank=True)
-    bio = HTMLField()
+    bio = HTMLField(default='none')
     points = models.IntegerField(default=0)
+    email = models.EmailField(unique=False,default="example@gmail.com", validators=[EmailValidator(message="Invalid email format")])
     profile_pic = ResizedImageField(size=[400, 400], quality=100, upload_to="authors", default="defaults/default_profile_pic.jpg", null=True, blank=False)
 
     def __str__(self):

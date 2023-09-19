@@ -20,6 +20,8 @@
     box-sizing: border-box;
 }
 
+
+
 html{
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
@@ -46,6 +48,32 @@ div {
     flex-basis: 18%;
     max-width: 22.5rem;
 }
+/*user info*/
+
+#user-info {
+    text-align:center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#user-pic, #user-name, #uname{
+    display: inline;
+}
+
+#pic {
+    border: 3px solid;
+    border-radius: 1rem;
+    background-color: var(--color-dark-light);
+    margin-top: 20px;
+}
+
+#user-name {
+    font-size: 40px;
+
+}
+
+/*user info end*/
+
 /*fixed button*/
 .fixed-button {
     position: fixed;
@@ -155,6 +183,7 @@ div {
 
 #searching {
     align-items: center;
+    
 }
 
 .info-bottom-right {
@@ -529,7 +558,7 @@ div {
         width: 50%;
         max-width: 150px;
         margin: 0 auto;
-
+        
     }
 
     #collum2 {
@@ -593,13 +622,17 @@ footer{
 /* posts table's head  */
 .table-head{
     display: flex;
+    background-color: var(--color-dark-light);
+    border-radius: 1rem;
+    margin-bottom: 10px;
 }
 
 .table-head div{
     padding: 5px;
     margin: 2px;
-    background-color: #2C2C2C;
+    background-color: --color-dark-light;
     font-weight: bold;
+    
 }
 
 .table-head .status{
@@ -627,7 +660,8 @@ footer{
 .table-row .status, .table-row .subjects, .table-row .replies, .table-row .last-reply{
     padding: 5px;
     margin: 2px;
-    background-color: #131415;
+    background-color: var(--color-dark);
+    border-radius: 1rem;
 }
 
 .table-row .status{

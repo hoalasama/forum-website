@@ -10,6 +10,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     path('account/', include('register.urls')),
     path('hitcount/', include('hitcount.urls', namespace='hitcount')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 
 
 	] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

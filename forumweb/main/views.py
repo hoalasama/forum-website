@@ -33,7 +33,7 @@ def home(request):
         Q(content__icontains=q)
     )
 
-    paginator = Paginator(posts, 5)
+    paginator = Paginator(posts, 10)
 
     try:
         last_post = Post.objects.latest("date")
@@ -91,7 +91,7 @@ def detail(request, slug):
 def posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
     posts = Post.objects.filter(approved=True, categories=category)
-    paginator = Paginator(posts, 5)
+    paginator = Paginator(posts, 10)
     page = request.GET.get("page")
     try:
         posts = paginator.page(page)
