@@ -3,12 +3,12 @@
 {% block content %}
 
 <h1 style="text-align:center; margin-block:50px; color:red;">{{user}}, Write something</h1>
-
-<form method="POST" style="margin-left:150px;" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.media }}
-    {{ form.as_p }}
-    <input type="submit" value="Post" style="margin-block:50px;">
-</form>
-
+<div style="display: flex; justify-content: center; ">
+    <form method="POST" style="margin-left:150px;" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input type="submit" value="Post" style="margin-block:50px;">
+    </form>
+</div>
 {% endblock content %}

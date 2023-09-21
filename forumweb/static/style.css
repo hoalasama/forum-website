@@ -48,6 +48,94 @@ div {
     flex-basis: 18%;
     max-width: 22.5rem;
 }
+/* edit comment pop up */
+div[class^='editcomment-overlay'], div[class*=' editcomment-overlay']{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000; 
+}
+
+div[class^='editcomment-content'], div[class*=' editcomment-content']{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 1001;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    width: 80%; 
+}
+
+div[class^='editcomment-content'] button[type="submit"], div[class*=' editcomment-content'] button[type="submit"],div[class^='editcomment-content'] button.close, div[class*=' editcomment-content'] button.close{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+div[class^='editcomment-content'] textarea, div[class*=' editcomment-content'] textarea{
+    overflow: auto;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+}
+
+
+/* edit comment pop up end*/
+
+/* edit reply pop up */
+
+div[class^='editreply-overlay'], div[class*=' editreply-overlay']{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000; 
+}
+
+div[class^='editreply-content'], div[class*=' editreply-content']{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    z-index: 1001;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    width: 80%; 
+}
+
+div[class^='editreply-content'] button[type="submit"], div[class*=' editreply-content'] button[type="submit"],div[class^='editreply-content'] button.close, div[class*=' editreply-content'] button.close{
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+div[class^='editreply-content'] textarea, div[class*=' editreply-content'] textarea{
+    overflow: auto;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+}
+
+/* edit reply pop up end*/
+
 /*user info*/
 
 #user-info {
@@ -314,23 +402,23 @@ div {
 .triangle-up {
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
+    border-left: 6px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 8px solid rgb(255, 255, 255);
     display: inline-block;
     position: relative;
-    top: -4px;
+    top: -1px;
   }
 
 .triangle-down {
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
+    border-left: 6px solid transparent;
     border-right: 5px solid transparent;
     border-top: 8px solid rgb(255, 255, 255);
     display: inline-block;
     position: relative;
-    top: -2px;
+    top: 0px;
   }
 
 .subforum{
@@ -568,7 +656,7 @@ div {
 
   /* Search Box styles */
 .search-box{
-    padding: 20px;
+    padding-top: 10px;
     display:flex;
     justify-content: center;
 }

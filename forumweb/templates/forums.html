@@ -16,7 +16,11 @@
             {% for post in posts %}
             <div class="head">
                 <div class="authors">Author</div>
+                {% if user.is_authenticated %}
                 <div class="content">Topic: <a href="{{post.get_url}}">{{post.title}}</a><!-- <span>(Read {% get_hit_count for post %} Times)</span>-->
+                {% else %}
+                <div class="content">Topic: <a href="{% url 'signin' %}">{{post.title}}</a>
+                {% endif %}
                     <!--<span>
                         {% for category in post.categories.all %}
                         {{ category.title }}

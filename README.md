@@ -38,6 +38,8 @@ password :
 lmaolmao
 ```
 front-end : static, templates
+
+choose function to do :
 ##
 when picking a function to do, add "your-name is working on" after the function, EX  "search : lmao is working on"
 ##
@@ -96,13 +98,9 @@ bot answer user post :
 ##
 click on IT keyword in post, comment, reply to see meaning of it : 
 ##
-(if possible) English test automatically generated base on user previous test:
-##
 user can save words that easy to forget : 
 ##
 click on the word to hear it : 
-##
-(optional) reward by cash monthly to top 3 user by point :
 ##
 provide grammar check, listening : 
 ##
@@ -110,3 +108,67 @@ alert in post when uploading if grammar is wrong :
 ##
 alert in comment when uploading if grammar is wrong : 
 ##
+
+expected functions:
+
+##
+connect word game
+##
+dictionary
+##
+report
+##
+words collection
+##
+check your grammar
+##
+typing practise (1k words, 5k words, 10k words, ...)
+##
+
+##
+
+##
+
+##
+
+##
+
+##
+
+Finished Functions:
+##
+create account
+##
+signin, signout
+##
+edit user info
+##
+create post
+##
+tag posts list
+##
+upvote, downvote for post
+##
+comment on post
+##
+reply on comment
+##
+edit, delete : post, comment, reply
+##
+categories
+##
+translate word from eng > vi ,vi > eng
+##
+searching engine (tag, user, post)
+##
+
+##
+
+##
+
+##
+
+##
+
+
+

@@ -86,13 +86,28 @@
                     {% if user.is_authenticated %}
                     <div class="comment">
                         <button onclick="showReplies('comment{{comment.id}}')">Reply</button>
+                        
                     </div>
                     {% endif %}
                     {% if user.is_authenticated and user == comment.user.user %}
-                        <a href="{% url 'edit_comment' comment.id post.slug %}" class="edit-comment">Edit</a>
+                        <button onclick="editComment('{{comment.id}}')">Edit</button>
+                        <!--<a href="{% url 'edit_comment' comment.id post.slug %}" class="edit-comment">Edit</a>-->
                         <br>
                         <a href="{% url 'delete_comment' comment.id post.slug %}" class="delete-comment">Delete</a>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+        <!--edit form-->
+        <div class="editcomment-overlay{{comment.id}}">
+            <div class="editcomment-content{{comment.id}}">
+                <div id="edit-comment-modal-comment{{comment.id}}" style="display: none;">
+                    <form method="POST" action="{% url 'edit_comment' comment.id post.slug %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea name="new_content">{{ comment.content }}</textarea>
+                        <button type="submit">Save</button>
+                        <button class="close" onclick="closeModal('edit-comment-modal-comment{{ comment.id }}')">Close</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -123,10 +138,24 @@
                     {{reply.content}}
                     <br>
                     {% if user.is_authenticated and user == reply.user.user %}
-                        <a href="{% url 'edit_reply' reply.id post.slug %}" class="edit-comment">Edit</a>
+                        <button onclick="editReply('{{reply.id}}')">Edit</button>
+                        <!--<a href="{% url 'edit_reply' reply.id post.slug %}" class="edit-comment">Edit</a>-->
                         <br>
                         <a href="{% url 'delete_reply' reply.id post.slug %}" class="delete-reply">Delete</a>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+        <!--reply edit pop-->
+        <div class="editreply-overlay{{reply.id}}">
+            <div class="editreply-content{{reply.id}}">
+                <div id="edit-reply-modal-reply{{reply.id}}" style="display: none;">
+                    <form method="POST" action="{% url 'edit_reply' reply.id post.slug %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea name="new_content">{{ reply.content }}</textarea>
+                        <button type="submit">Save</button>
+                        <button class="close" onclick="rcloseModal('edit-reply-modal-reply{{ reply.id }}')">Close</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -168,6 +197,56 @@
             });
         }
     </script>
+    <script>
+        function editComment(commentId) {
+            var overlay = document.querySelector('.editcomment-overlay' + commentId);
+            var modal = document.querySelector('.editcomment-content' + commentId);
+            var modals = document.getElementById('edit-comment-modal-comment' + commentId);
+            
+            if (overlay && modal && modals) {
+                overlay.style.display = 'block';
+                modal.style.display = 'block';
+                modals.style.display = 'block';
+            }
+        }
+        
+        function rcloseModal(commentId) {
+            var overlay = document.querySelector('.editcomment-overlay' + commentId);
+            var modal = document.querySelector('.editcomment-content' + commentId);
+            var modals = document.getElementById('edit-comment-modal-comment' + commentId);
+            
+            if (overlay && modal && modals) {
+                overlay.style.display = 'none';
+                modal.style.display = 'none';
+                modals.style.display = 'none';
+            }
+        }
 
+
+
+        function editReply(replyId) {
+            var roverlay = document.querySelector('.editreply-overlay' + replyId);
+            var rmodal = document.querySelector('.editreply-content' + replyId);
+            var rmodals = document.getElementById('edit-reply-modal-reply' + replyId);
+            
+            if (roverlay && rmodal && rmodals) {
+                roverlay.style.display = 'block';
+                rmodal.style.display = 'block';
+                rmodals.style.display = 'block';
+            }
+        }
+        
+        function closeModal(replyId) {
+            var roverlay = document.querySelector('.editreply-overlay' + replyId);
+            var rmodal = document.querySelector('.editreply-content' + replyId);
+            var rmodals = document.getElementById('edit-reply-modal-reply' + replyId);
+            
+            if (roverlay && rmodal && rmodals) {
+                roverlay.style.display = 'none';
+                rmodal.style.display = 'none';
+                rmodals.style.display = 'none';
+            }
+        }
+    </script>
 
     {% endblock content %}

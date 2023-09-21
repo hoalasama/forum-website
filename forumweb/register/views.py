@@ -4,22 +4,34 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from register.forms import UpdateForm
 from django.contrib.auth import logout as lt
-from main.models import Author
+from main.models import Author,Post
 from django.contrib.auth.models import User
 from register.checkprofile import profile_completion_required
 
 
 def signup(request):
     context = {}
-    form = UserCreationForm(request.POST or None)
     if request.method == "POST":
-        if form.is_valid():
-            new_user = form.save()
-            login(request, new_user)
-            return redirect("update_profile")
+        user_form = UserCreationForm(request.POST)
+        author_form = UpdateForm(request.POST, request.FILES)
+
+        if user_form.is_valid() and author_form.is_valid():
+            user = user_form.save()
+            author = author_form.save(commit=False)
+            author.user = user
+            author.save()
+
+            login(request, user)
+            return redirect("home")
+
+    else:
+        user_form = UserCreationForm()
+        author_form = UpdateForm()
+
     context.update({
-        "form":form, 
-        "title": "Signup", 
+        "user_form": user_form,
+        "author_form": author_form,
+        "title": "Signup",
     })
     return render(request, "register/signup.html", context)
 
@@ -63,8 +75,10 @@ def update_profile(request):
 def view_profile(request):
     user = request.user
     author = Author.objects.get(user=user)
+    user_posts = Post.objects.filter(user=author)
     context = {
-        "author" : author
+        "author" : author,
+        "user_posts": user_posts,
     }
     return render(request, "register/viewprofile.html", context)
 

@@ -4,9 +4,10 @@
 
 <h1 style="text-align:center; margin-block:50px; color:red;">Create An Account</h1>
 
-<form method="POST" action="." style="margin-left:150px;">
+<form method="POST" action="." style="margin-left:150px;" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form|crispy }}
+    {{ user_form.as_p }}
+    {{ author_form.as_p }}
     <input type="submit" value="Signup" style="margin-block:50px;">
 </form>
 

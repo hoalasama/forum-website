@@ -14,6 +14,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from register.checkprofile import profile_completion_required
 from django.db.models import Q
+from .forms import PostEditForm
 
 @profile_completion_required
 def home(request):
@@ -58,6 +59,7 @@ def home(request):
         "title": "Home Page",
     }
     return render(request, "forums.html", context)
+
 
 def detail(request, slug):
     post = get_object_or_404(Post, slug = slug)
@@ -174,21 +176,17 @@ def search_result(request):
 
 @login_required
 def edit_post(request, post_id, post_slug):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     slug = post_slug
     if request.method == 'POST':
-        post.title = request.POST.get('new_title')
-        post.content = request.POST.get('new_content')
-
-        post.tags.clear()
-        tags = request.POST.get('tags')
-        if tags:
-            tag_list = [tag.strip() for tag in tags.split(',')]
-            post.tags.add(*tag_list)
-        post.save()
-        return redirect('detail', slug)
+        form = PostEditForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('detail', slug)
+    else:
+        form = PostEditForm(instance=post)
     
-    return render(request, 'register/editpost.html', {'post': post})
+    return render(request, 'register/editpost.html', {'form': form, 'post': post})
 
 @login_required
 def edit_comment(request, comment_id, post_slug):
