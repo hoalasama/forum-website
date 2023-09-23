@@ -76,11 +76,11 @@ following the post :
 ##
 online/ offline status : 
 ##
-notification for new comment in following post :
+notification for new comment in following post : Kiệt is working
 ##
-notification when someone reply your comment : 
+notification when someone reply your comment : Kiệt is working
 ##
-notification on new reply in comment that you replied :
+notification on new reply in comment that you replied : Kiệt is working
 ##
 role : 
 ##
