@@ -84,7 +84,8 @@ def view_profile(request):
 
 def other_profile(request, slug):
     author = Author.objects.get(slug=slug)
-    return render(request, "register/otherprofile.html", {'author': author})
+    user_posts = Post.objects.filter(user=author)
+    return render(request, "register/otherprofile.html", {'author': author,"user_posts": user_posts})
 
 @login_required
 def logout(request):

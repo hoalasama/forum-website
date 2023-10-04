@@ -2,13 +2,13 @@
     <div class="subforum-description subforum-column">
         <h2>Browse Topics</h2>
     </div>
-    <ul style="list-style-type: none;">
+    <ul class="topics" style="list-style-type: none;">
         <li>
-            <a href="{% url 'home' %}" class="active">All <span>({{num_posts}})</span></a>
+            <a href="{% url 'home' %}" class="active"> All  <span>{{num_posts}}</span></a>
         </li>
         {% for forum in forums %}
         <li>
-            <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span>({{forum.num_posts}})</span></a>
+            <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span>{{forum.num_posts}}</span></a>
         </li>
         {% endfor %}
 

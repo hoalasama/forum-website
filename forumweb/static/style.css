@@ -144,9 +144,7 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
     width: 100%;
 }
 
-#user-pic, #user-name, #uname{
-    display: inline;
-}
+
 
 #pic {
     border: 3px solid;
@@ -156,11 +154,48 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
 }
 
 #user-name {
-    font-size: 40px;
+    font-size: 20px;
 
 }
 
+#user-stats{
+    width: 50%;
+    margin: auto;
+}
+
+#user-posts{
+    width: 50%;
+    margin: auto;
+}
+
 /*user info end*/
+
+/*topics*/
+
+.topics li a {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    font-weight: 500;
+    color: var(--color-light-gray);
+    transition: all 0.3s ease-in-out;
+  }
+
+.topics li a span {
+    padding: 0.5rem 1rem;
+    background-color: var(--color-dark);
+    border-radius: 3px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+.topics li a.active,
+.topics li a:hover {
+    color: var(--color-main);
+  }  
+
+/*topics end*/
+
 
 /*fixed button*/
 .fixed-button {
@@ -259,11 +294,11 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
 }
 /*fixed button end*/
 #collum2 {
-    flex-basis: 50%;
+    flex-basis: 45%;
 }
 
 .container > .forum-info{
-    flex-basis: 25%;
+    flex-basis: 20%;
     background-color: var(--color-dark);
     border-radius: 1rem;
     padding: 1.5rem;
@@ -440,8 +475,7 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
 .subforum-column{
     padding: 15px;
     margin:4px;
-    border-radius: 1rem;
-    background-color: var(--color-dark);
+
 }
 
 .subforum-description *{
@@ -488,6 +522,7 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
     
     .desktop-category {
         display: none;
+        
       }
       
     .mobile-category {
@@ -553,7 +588,7 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
     justify-content: space-between;
 }
 .navigation{
-    background-color:#4e4d4f;
+    background-color:#3f4156;
     padding: 10px;
     width: 40%;
     display: inline-block;
