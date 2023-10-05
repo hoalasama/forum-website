@@ -1,14 +1,79 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1>Edit Profile</h1>
+<style>
+    .center-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+    }
+    .edit-profile-form {
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #3f4156;
+        border-collapse:separate; 
+        border-spacing: 0 10px;
+    }
+    .save-button {
+        margin-top: 20px;
+        background-color: var(--color-main);
+        cursor: pointer;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 1rem;
+    }
+    input{
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+        padding: 5px;
+    }
+    textarea {
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+    }
+</style>
+
+<div class="center-form">
+    <table class="edit-profile-form">
+        <tr>
+            <td colspan="2">
+                <h2>Edit Profile</h2>
+            </td>
+        </tr>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Save</button>
-            <a href="{{request.META.HTTP_REFERER}}">back</a>
+            <tr>
+                <td>{{ form.fullname.label_tag }}</td>
+                <td>{{ form.fullname }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.bio.label_tag }}</td>
+                <td>{{ form.bio }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.email.label_tag }}</td>
+                <td>{{ form.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.profile_pic.label_tag }}</td>
+                <td>{{ form.profile_pic }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="save-button">Save</button>
+                    <a href="{{request.META.HTTP_REFERER}}">back</a>
+                </td>
+            </tr>
         </form>
-        
-    </div>
+    </table>
+</div>
 {% endblock %}

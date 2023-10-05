@@ -44,6 +44,8 @@ div {
     display: block;
 }
 
+
+
 .container > .category {
     flex-basis: 18%;
     max-width: 22.5rem;

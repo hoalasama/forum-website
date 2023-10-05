@@ -55,28 +55,13 @@
 
             {% if user.is_authenticated %}
             {% endif %}
-            <div id="createpost" style="font-size:18px; font-weight:300px; "><a style=" color:#696d97;" class="btn btn--main" id="createpost" href="
+            <div id="createpost" style="font-size:18px; font-weight:300px; "><a style=" color:#696d97;margin-right:150px" class="btn btn--main" id="createpost" href="
                 {% if user.is_authenticated %}
                 {% url 'create_post' %}
                 {% endif %}
                 ">+ Create Post</a>
             </div>
-            <div class="dropdown">
-                {% if user.is_authenticated %}
-                <i class="fa fa-user-circle"></i>
-                <div class="dropdown-options">
-                    <a href="{% url 'view_profile' %}">Profile</a>
-                    <a href="{% url 'edit_profile' %}">Edit</a>
-                    <a href="{% url 'logout' %}">Logout</a>
-                </div>
-                {% else%}
-                <i class="fa fa-user-circle"></i>
-                <div class="dropdown-options">
-                    <a href="{% url 'signup' %}">Signup</a>
-                    <a href="{% url 'signin' %}">Signin</a>
-                </div>
-                {% endif %}
-            </div>
+            
 
         </div>
 
