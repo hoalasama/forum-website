@@ -100,11 +100,11 @@
         </div>
         <!--edit form-->
         <div class="editcomment-overlay{{comment.id}}">
-            <div class="editcomment-content{{comment.id}}">
-                <div id="edit-comment-modal-comment{{comment.id}}" style="display: none;">
+            <div class="editcomment-content{{comment.id}}" style="background-color: #3f4156;">
+                <div id="edit-comment-modal-comment{{comment.id}}" style="display: none; ">
                     <form method="POST" action="{% url 'edit_comment' comment.id post.slug %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <textarea name="new_content">{{ comment.content }}</textarea>
+                        <textarea name="new_content" style="background-color: #3f4156; color:#ffffff">{{ comment.content }}</textarea>
                         <button type="submit">Save</button>
                         <button class="close" onclick="closeModal('edit-comment-modal-comment{{ comment.id }}')">Close</button>
                     </form>
@@ -148,11 +148,11 @@
         </div>
         <!--reply edit pop-->
         <div class="editreply-overlay{{reply.id}}">
-            <div class="editreply-content{{reply.id}}">
+            <div class="editreply-content{{reply.id}}" style="background-color: #3f4156;">
                 <div id="edit-reply-modal-reply{{reply.id}}" style="display: none;">
                     <form method="POST" action="{% url 'edit_reply' reply.id post.slug %}" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <textarea name="new_content">{{ reply.content }}</textarea>
+                        <textarea name="new_content" style="background-color: #3f4156; color:#ffffff">{{ reply.content }}</textarea>
                         <button type="submit">Save</button>
                         <button class="close" onclick="rcloseModal('edit-reply-modal-reply{{ reply.id }}')">Close</button>
                     </form>

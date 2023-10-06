@@ -2,13 +2,51 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h1 style="text-align:center; margin-block:50px; color:red;">{{user}}, Delete something</h1>
 {% if user.is_authenticated %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <strong>Are u sure</strong>
-    <button type="submit">delete</button>
-    <a href="{{request.META.HTTP_REFERER}}">back</a>
-</form>
+
+<style>
+    .center-form {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .delete-form {
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #3f4156;
+        text-align: center;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .delete-button {
+        margin-top: 20px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        
+    }
+
+    .back-link {
+        margin-top: 10px;
+        display: block;
+        text-align: center;
+    }
+</style>
+
+<div class="center-form">
+    <form method="POST" enctype="multipart/form-data" class="delete-form">
+        {% csrf_token %}
+        <strong class="form-label">Are you sure you want to delete that reply?</strong>
+        <button type="submit" class="delete-button">Delete</button>
+        <a href="{{request.META.HTTP_REFERER}}" class="back-link">Back</a>
+    </form>
+</div>
 {% endif %}
 {% endblock content %}

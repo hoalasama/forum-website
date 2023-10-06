@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <textarea name="new_content">{{ comment.content }}</textarea>

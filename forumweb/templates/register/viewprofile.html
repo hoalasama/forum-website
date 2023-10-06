@@ -20,14 +20,14 @@
 <div id="user-stats">
     <p><strong>Stats:</strong></p>
     <ul>
-        <li><strong>Số bài đăng:</strong> {{ user_post_count }}</li>
-        <li><strong>Số bình luận:</strong> {{ user_comment_count }}</li>
-        <li><strong>Số phản hồi:</strong> {{ user_response_count }}</li>
+        <li><strong>Posts:</strong> {{ user_post_count }}</li>
+        <li><strong>Comment:</strong> {{ user_comment_count }}</li>
+        <li><strong>Reply:</strong> {{ user_response_count }}</li>
     </ul>
 </div>
 
 <div id="user-posts">
-    <p><strong>Các bài viết:</strong></p>
+    <p><strong>Posts:</strong></p>
     <ul>
         {% for post in user_posts %}
             <li><a href="{% url 'detail' post.slug %}">{{ post.title }}</a></li>
