@@ -35,7 +35,11 @@
             
                 <div class="body">
                     <div class="authors">
+                        {% if user.is_authenticated %}
                         <div class="username"><a href="{% url 'other_profile' post.user.slug %}">{{post.user.fullname|title}}</a></div>
+                        {% else %}
+                        <div class="username"><a href="{% url 'signin' %}">{{post.user.fullname|title}}</a></div>
+                        {% endif %}
                         <!--<div>Role</div>-->
                         <img src="{{post.user.profile_pic.url}}" alt="">
                         <div>Posts: <u>{{comment.user.num_posts}}</u></div>
@@ -51,10 +55,19 @@
                         {% endif %}
                     </div>
                     <div class="content">
+                        <!--{% if post.content|length > 50 %}
+                            {{ post.content|safe|slice:":50" }}... <a href="{{post.get_url}}">Read more</a>
+                        {% else %}
+                            {{ post.content | safe}}
+                        {% endif %}-->
                         {{post.content|safe}}
                         <div>
                         {% for tag in post.tags.all %}
+                        {% if user.is_authenticated %}
                             <a href="{% url 'tagged_posts' tag.slug %}">#{{ tag.name }}</a>
+                        {% else %}
+                            <a href="{% url 'signin' %}">#{{ tag.name }}</a>
+                        {% endif %}
                         {% endfor %}
                         </div>
                         {% if post.image %}
@@ -103,19 +116,27 @@
             <span><u>{{num_posts}}</u> Posts in <u>{{num_categories}}</u> Topics by <u>{{num_users}}</u> Members.</span><br>
             <span>Latest post: 
             <b>
-                {% if last_post.user.slug %}
-                    <a href="{{last_post.get_url}}">{{last_post.title}}</a>
+                {% if user.is_authenticated %}
+                    {% if last_post.user.slug %}
+                        <a href="{{last_post.get_url}}">{{last_post.title}}</a>
+                    {% else %}
+                        {{ last_post.title }}
+                    {% endif %}
                 {% else %}
-                    {{ last_post.title }}
+                        <a href="{% url 'signin' %}">{{last_post.title}}</a>
                 {% endif %}
             </b> on 
             {{last_post.date|date}} By 
-            {% if last_post.user.slug %}
+            {% if last_post.user.slug and user.is_authenticated %}
                 <a href="{% url 'other_profile' last_post.user.slug %}">{{last_post.user.fullname|title}}</a></span>.<br>
             {% else %}
-                {{ last_post.user.fullname|title }}
+                <a href="{% url 'signin' %}">{{ last_post.user.fullname|title }}</a>
             {% endif %}
-            <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
+            {% if user.is_authenticated %}
+                <span>Check <a href="{% url 'latest_posts' %}">the latest posts</a> .</span><br>
+            {% else %}
+                <span>Check <a href="{% url 'signin' %}">the latest posts</a> .</span><br>
+            {% endif %}
         </div>        
     </div>
     

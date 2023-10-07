@@ -296,7 +296,7 @@ div[class^='editreply-content'] textarea, div[class*=' editreply-content'] texta
 }
 /*fixed button end*/
 #collum2 {
-    flex-basis: 45%;
+    width: 45%;
 }
 
 .container > .forum-info{

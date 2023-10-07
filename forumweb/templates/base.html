@@ -43,7 +43,11 @@
                 <div class="brand" id="logo"><a id="myforum" style="color:#b2bdbd;" href="{% url 'home' %}">My Forum</a></div>
             </div>
             <div id="searching" class="">
+                {% if user.is_authenticated %}
                 <form action="{% url 'search_result' %}" role="form" method="GET">
+                {% else %}
+                <form action="{% url 'signin' %}" role="form" method="GET">
+                {% endif %}
                     <div class="search-box">
                         <div>                
                             <input type="text" name="query" placeholder="search ..." id="finding" style="color: white;">

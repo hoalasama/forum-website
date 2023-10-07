@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% load hitcount_tags %}
 {% block content %}
+<style>
+    .post-button {
+        background-color: var(--color-main);
+        cursor: pointer;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
     <div class="container1">
         <!--Navigation-->
         <div class="navigate">
-            <span><a href="{% url 'home' %}">Forums</a> -> <a href="{{post.get_url}}">{{post.title}}</a></span>
+            <span><a href="{% url 'home' %}">Forums</a> > <a href="{{post.get_url}}">{{post.title}}</a></span>
         </div>
 
         <!--Topic Section-->
@@ -90,7 +100,7 @@
                     </div>
                     {% endif %}
                     {% if user.is_authenticated and user == comment.user.user %}
-                        <button onclick="editComment('{{comment.id}}')">Edit</button>
+                        <button onclick="editComment('{{comment.id}}')" class="post-button">Edit</button>
                         <!--<a href="{% url 'edit_comment' comment.id post.slug %}" class="edit-comment">Edit</a>-->
                         <br>
                         <a href="{% url 'delete_comment' comment.id post.slug %}" class="delete-comment">Delete</a>
@@ -138,7 +148,7 @@
                     {{reply.content}}
                     <br>
                     {% if user.is_authenticated and user == reply.user.user %}
-                        <button onclick="editReply('{{reply.id}}')">Edit</button>
+                        <button onclick="editReply('{{reply.id}}')" class="post-button">Edit</button>
                         <!--<a href="{% url 'edit_reply' reply.id post.slug %}" class="edit-comment">Edit</a>-->
                         <br>
                         <a href="{% url 'delete_reply' reply.id post.slug %}" class="delete-reply">Delete</a>
