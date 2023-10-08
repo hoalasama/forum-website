@@ -11,6 +11,9 @@
             <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span>{{forum.num_posts}}</span></a>
         </li>
         {% endfor %}
+        <li>
+            <a href="{% url 'category_full' %}">More</a>
+        </li>
 
     </ul>
 </div>

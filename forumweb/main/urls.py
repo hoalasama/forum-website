@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, detail, posts, create_post, latest_posts, delete_post, search_result, edit_comment, edit_reply, tagged_posts, edit_post, upvote, downvote,delete_comment,delete_reply
+from .views import home, detail, posts, create_post, latest_posts, delete_post, search_result, edit_comment, edit_reply, tagged_posts, edit_post, upvote, downvote,delete_comment,delete_reply, category_full
     
 from . import views
 
@@ -23,4 +23,5 @@ urlpatterns = [
     
     path("upvote/<int:post_id>/", upvote, name="upvote"),
     path("downvote/<int:post_id>/", downvote, name="downvote"),
+    path("category_full", category_full, name="category_full")
 ]

@@ -19,6 +19,7 @@ from .forms import PostEditForm
 @profile_completion_required
 def home(request):
     forums = Category.objects.all()
+    forums_sliced = forums[:2]
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
@@ -49,7 +50,7 @@ def home(request):
         posts = paginator.page(paginator.num_pages)
         
     context = {
-        "forums":forums,
+        "forums":forums_sliced,
         "num_posts":num_posts,
         "num_users":num_users,
         "num_categories":num_categories,
@@ -269,3 +270,9 @@ def downvote(request, post_id):
     #return redirect(request.META.get('HTTP_REFERER', ''))
     return JsonResponse({'vote_count': vote_count})
 
+def category_full(request):
+    category = Category.objects.all()
+    context = {
+        "cate": category,
+    }
+    return render(request, "category_full.html", context)
