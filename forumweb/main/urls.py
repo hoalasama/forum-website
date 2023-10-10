@@ -23,5 +23,6 @@ urlpatterns = [
     
     path("upvote/<int:post_id>/", upvote, name="upvote"),
     path("downvote/<int:post_id>/", downvote, name="downvote"),
-    path("category_full", category_full, name="category_full")
+    path("category_full/", category_full, name="category_full"),
+    path('create_category/', views.create_category, name='create_category'),
 ]

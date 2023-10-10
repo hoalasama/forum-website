@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from register.checkprofile import profile_completion_required
 from django.db.models import Q
 from .forms import PostEditForm
+from .forms import CategoryForm
 
 @profile_completion_required
 def home(request):
@@ -272,7 +273,21 @@ def downvote(request, post_id):
 
 def category_full(request):
     category = Category.objects.all()
+    user= request.user
+    author = Author.objects.get(user=user.id)
     context = {
         "cate": category,
+        'author': author,
     }
     return render(request, "category_full.html", context)
+
+def create_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save()
+            return redirect('home') 
+    else:
+        form = CategoryForm()
+    
+    return render(request, 'create_category.html', {'form': form})

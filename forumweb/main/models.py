@@ -20,7 +20,12 @@ class Author(models.Model):
     points = models.IntegerField(default=0)
     email = models.EmailField(unique=False,default="example@gmail.com", validators=[EmailValidator(message="Invalid email format")])
     profile_pic = ResizedImageField(size=[400, 400], quality=100, upload_to="authors", default="defaults/default_profile_pic.jpg", null=True, blank=False)
-
+    ROLES = (
+        ('user','User'),
+        ('teacher','Teacher'),
+        ('admin','Admin'),
+    )
+    roles = models.CharField(max_length=50, choices=ROLES, default="user")
     def __str__(self):
         return self.fullname
 
@@ -139,3 +144,4 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = ('user', 'post')
+
