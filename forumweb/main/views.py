@@ -16,6 +16,7 @@ from register.checkprofile import profile_completion_required
 from django.db.models import Q
 from .forms import PostEditForm
 from .forms import CategoryForm
+from django.db import IntegrityError
 
 @profile_completion_required
 def home(request):
@@ -162,16 +163,31 @@ def latest_posts(request):
 @profile_completion_required
 def search_result(request):
     query = request.GET.get('query', '')
-    #results = Post.objects.filter(title__icontains=query)
-    results = Post.objects.filter(
-        Q(title__icontains=query) |  
-        Q(content__icontains=query) | 
-        Q(user__fullname__icontains=query)  
-    )
+    search_option = request.GET.get('search_option', 'all')
+
+    if search_option == 'all':
+        results = Post.objects.filter(
+            Q(title__icontains=query) |  
+            Q(user__fullname__icontains=query) |
+            Q(categories__title__icontains=query) 
+        )
+    elif search_option == 'user':
+        results = Post.objects.filter(
+            Q(user__fullname__icontains=query)
+        )
+    elif search_option == 'title':
+        results = Post.objects.filter(
+            Q(title__icontains=query)
+        )
+    elif search_option == 'category':
+        results = Post.objects.filter(
+            Q(categories__title__icontains=query)
+        )
 
     context = {
         'query': query,
-        'objects': results
+        'objects': results,
+        'search_option': search_option,
     }
 
     return render(request, 'search.html', context)
@@ -285,9 +301,12 @@ def create_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
         if form.is_valid():
-            category = form.save()
-            return redirect('home') 
+            try:
+                category = form.save()
+                return redirect('home')
+            except IntegrityError:
+                form.add_error('title', 'Category with this name already exists.')
     else:
         form = CategoryForm()
-    
+
     return render(request, 'create_category.html', {'form': form})

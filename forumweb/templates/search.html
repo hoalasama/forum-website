@@ -5,17 +5,22 @@
     <div class="container1">
         <!--Navigation-->
         <div class="navigate">
-            <span>Search: {{ query }} --> {{ objects|length }} Result(s) Found</span>
+            <span>Search: {{ query }} > {{ objects|length }} Result(s) Found</span>
         </div>
         <!--Display posts table-->
         <div class="posts-table">
-            <!--<div class="table-head">
-                <div class="status">Status</div>
-                <div class="subjects">Subjects</div>
-                <div class="replies">Replies/Views</div>
-                <div class="last-reply">Last Reply</div>
-            </div>-->
-
+            <form id="search-form" action="{% url 'search_result' %}" role="form" method="GET">
+                <div class="search-box">
+                    <input type="text" name="query" id="query" placeholder="search ..." style="color: black;">
+                    <select name="search_option" id="search_option">
+                        <option value="all">All</option>
+                        <option value="user">User</option>
+                        <option value="title">Title</option>
+                        <option value="category">Category</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </div>
+            </form>
             <div>
             {% for post in objects %}
             <div class="head">
