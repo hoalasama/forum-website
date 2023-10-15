@@ -8,7 +8,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 80vh;
+        height: 90vh;
     }
 
     .signup-form {
@@ -54,6 +54,20 @@
         </tr>
         <form method="POST" action="." enctype="multipart/form-data">
             {% csrf_token %}
+            <tr>
+                <td>{{ user_form.username.label_tag }}</td>
+                <td>{{ user_form.username }}</td>
+                {{ user_form.password1.errors }}
+            </tr>
+            <tr>
+                <td>{{ user_form.password1.label_tag }}</td>
+                <td>{{ user_form.password1 }}</td>
+            </tr>
+            <tr>
+                <td>{{ user_form.password2.label_tag }}</td>
+                <td>{{ user_form.password2 }}</td>
+                {{ user_form.password2.errors }}
+            </tr>
             <tr>
                 <td>{{ author_form.fullname.label_tag }}</td>
                 <td>{{ author_form.fullname }}</td>
