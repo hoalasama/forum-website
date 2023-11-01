@@ -18,6 +18,7 @@ from .forms import PostEditForm
 from .forms import CategoryForm
 from django.db import IntegrityError
 
+
 @profile_completion_required
 def home(request):
     forums = Category.objects.all()
@@ -25,9 +26,9 @@ def home(request):
     num_posts = Post.objects.all().count()
     num_users = User.objects.all().count()
     num_categories = forums.count()
-    
+
     #posts = Post.objects.all()
-    
+
     page = request.GET.get("page")
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
@@ -50,48 +51,51 @@ def home(request):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-        
+
     context = {
-        "forums":forums_sliced,
-        "num_posts":num_posts,
-        "num_users":num_users,
-        "num_categories":num_categories,
-        "last_post":last_post,
-        "posts" : posts,
-        "q" : q,
+        "forums": forums_sliced,
+        "num_posts": num_posts,
+        "num_users": num_users,
+        "num_categories": num_categories,
+        "last_post": last_post,
+        "posts": posts,
+        "q": q,
         "title": "Home Page",
     }
     return render(request, "forums.html", context)
 
 
 def detail(request, slug):
-    post = get_object_or_404(Post, slug = slug)
+    post = get_object_or_404(Post, slug=slug)
     post = Post.objects.get(pk=post.id)
 
     author = get_object_or_404(Author, user=request.user)
     if request.user.is_authenticated:
-        author = Author.objects.get(user=request.user)  
+        author = Author.objects.get(user=request.user)
     if request.method == "POST":
         if "comment-form" in request.POST:
             comment = request.POST.get("comment")
-            new_comment, created = Comment.objects.get_or_create(user=author, content=comment)
+            new_comment, created = Comment.objects.get_or_create(
+                user=author, content=comment)
             post.comments.add(new_comment.id)
 
         if "reply-form" in request.POST:
             reply = request.POST.get("reply")
             comment_id = request.POST.get("comment-id")
             comment_obj = Comment.objects.get(id=comment_id)
-            new_reply, created = Reply.objects.get_or_create(user=author, content=reply)
+            new_reply, created = Reply.objects.get_or_create(
+                user=author, content=reply)
             comment_obj.replies.add(new_reply.id)
 
     context = {
-        "post":post,
+        "post": post,
         "title": post.title,
         "author": author,
     }
     update_views(request, post)
 
     return render(request, "detail.html", context)
+
 
 def posts(request, slug):
     category = get_object_or_404(Category, slug=slug)
@@ -105,12 +109,13 @@ def posts(request, slug):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     context = {
-        "posts":posts,
+        "posts": posts,
         "forum": category,
         "title": "Posts"
     }
 
     return render(request, "posts.html", context)
+
 
 @profile_completion_required
 @login_required
@@ -123,6 +128,7 @@ def create_post(request):
             new_post = form.save(commit=False)
             new_post.user = author
             new_post.save()
+            messages.success(request, "New post just created!")
             form.save_m2m()
             return redirect("home")
     context.update({
@@ -131,34 +137,39 @@ def create_post(request):
     })
     return render(request, "create_post.html", context)
 
+
 @login_required
 def delete_post(request, post_id=None):
     post_to_delete = get_object_or_404(Post, id=post_id)
-    
+
     if post_to_delete.user.user != request.user:
         return redirect('home')
     elif request.method == 'POST':
         post_to_delete.delete()
+        messages.success(request, "Done. Your post is deleted.")
         return redirect('home')
 
     context = {
         'post_id': post_id,
-        'user' : request.user,
+        'user': request.user,
     }
     return render(request, 'delete_post.html', context)
+
 
 def my_view(request, post_id):
     post_id = get_object_or_404(Post, id=post_id)
     url = reverse('delete_post', args=[post_id])
 
+
 def latest_posts(request):
     posts = Post.objects.all().filter(approved=True)[:10]
     context = {
-        "posts":posts,
+        "posts": posts,
         "title": "Latest 10 posts"
     }
 
     return render(request, "latest-posts.html", context)
+
 
 @profile_completion_required
 def search_result(request):
@@ -167,9 +178,9 @@ def search_result(request):
 
     if search_option == 'all':
         results = Post.objects.filter(
-            Q(title__icontains=query) |  
+            Q(title__icontains=query) |
             Q(user__fullname__icontains=query) |
-            Q(categories__title__icontains=query) 
+            Q(categories__title__icontains=query)
         )
     elif search_option == 'user':
         results = Post.objects.filter(
@@ -192,6 +203,7 @@ def search_result(request):
 
     return render(request, 'search.html', context)
 
+
 @login_required
 def edit_post(request, post_id, post_slug):
     post = get_object_or_404(Post, pk=post_id)
@@ -200,11 +212,13 @@ def edit_post(request, post_id, post_slug):
         form = PostEditForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
+            messages.success(request, "Edited post successfully.")
             return redirect('detail', slug)
     else:
         form = PostEditForm(instance=post)
-    
+
     return render(request, 'register/editpost.html', {'form': form, 'post': post})
+
 
 @login_required
 def edit_comment(request, comment_id, post_slug):
@@ -214,9 +228,11 @@ def edit_comment(request, comment_id, post_slug):
         new_content = request.POST.get('new_content')
         comment.content = new_content
         comment.save()
+        messages.success(request, "Edited comment successfully.")
         return redirect('detail', slug)
 
     return render(request, 'register/editcomment.html', {'comment': comment})
+
 
 @login_required
 def delete_comment(request, comment_id, post_slug):
@@ -225,9 +241,11 @@ def delete_comment(request, comment_id, post_slug):
     if request.method == 'POST':
         comment.replies.all().delete()
         comment.delete()
+        messages.success(request, "Boom. Your comment is deleted.")
         return redirect('detail', slug)
-    
+
     return render(request, 'delete_comment.html', {'comment': comment})
+
 
 @login_required
 def edit_reply(request, reply_id, post_slug):
@@ -237,9 +255,11 @@ def edit_reply(request, reply_id, post_slug):
         new_content = request.POST.get('new_content')
         comment.content = new_content
         comment.save()
+        messages.success(request, "Edited reply successfully.")
         return redirect('detail', slug)
 
     return render(request, 'register/editreply.html', {'reply': comment})
+
 
 @login_required
 def delete_reply(request, reply_id, post_slug):
@@ -247,14 +267,17 @@ def delete_reply(request, reply_id, post_slug):
     slug = post_slug
     if request.method == 'POST':
         comment.delete()
+        messages.success(request, "Boom. Your reply is deleted.")
         return redirect('detail', slug)
-    
+
     return render(request, 'delete_reply.html', {'comment': comment})
+
 
 def tagged_posts(request, tag_slug):
     tag = tag_slug.split('/')[-1]
     posts = Post.objects.filter(tags__slug=tag_slug)
-    return render(request, 'tagged_posts.html', {'tag': tag,'posts': posts})
+    return render(request, 'tagged_posts.html', {'tag': tag, 'posts': posts})
+
 
 @login_required
 def upvote(request, post_id):
@@ -262,40 +285,42 @@ def upvote(request, post_id):
     user = request.user
     author = Author.objects.get(user=user.id)
     vote, created = Vote.objects.get_or_create(user=author, post=post)
-    
+
     if created or vote.activity_type == Vote.DOWN_VOTE[0]:
         vote.activity_type = Vote.UP_VOTE[0]
         vote.save()
-    
+
     vote_count = post.get_vote_count()
-    #return redirect(request.META.get('HTTP_REFERER', ''))
+    # return redirect(request.META.get('HTTP_REFERER', ''))
     return JsonResponse({'vote_count': vote_count})
-    
-    
+
+
 @login_required
 def downvote(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     user = request.user
     author = Author.objects.get(user=user.id)
     vote, created = Vote.objects.get_or_create(user=author, post=post)
-    
+
     if created or vote.activity_type == Vote.UP_VOTE[0]:
         vote.activity_type = Vote.DOWN_VOTE[0]
         vote.save()
-    
+
     vote_count = post.get_vote_count()
-    #return redirect(request.META.get('HTTP_REFERER', ''))
+    # return redirect(request.META.get('HTTP_REFERER', ''))
     return JsonResponse({'vote_count': vote_count})
+
 
 def category_full(request):
     category = Category.objects.all()
-    user= request.user
+    user = request.user
     author = Author.objects.get(user=user.id)
     context = {
         "cate": category,
         'author': author,
     }
     return render(request, "category_full.html", context)
+
 
 def create_category(request):
     if request.method == 'POST':
@@ -305,7 +330,8 @@ def create_category(request):
                 category = form.save()
                 return redirect('home')
             except IntegrityError:
-                form.add_error('title', 'Category with this name already exists.')
+                form.add_error(
+                    'title', 'Category with this name already exists.')
     else:
         form = CategoryForm()
 
