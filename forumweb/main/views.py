@@ -31,7 +31,6 @@ def home(request):
 
     page = request.GET.get("page")
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-
     posts = Post.objects.filter(
         Q(categories__title__icontains=q) |
         Q(title__icontains=q) |
@@ -230,7 +229,7 @@ def edit_comment(request, comment_id, post_slug):
         comment.save()
         messages.success(request, "Edited comment successfully.")
         return redirect('detail', slug)
-
+    
     return render(request, 'register/editcomment.html', {'comment': comment})
 
 
@@ -257,7 +256,7 @@ def edit_reply(request, reply_id, post_slug):
         comment.save()
         messages.success(request, "Edited reply successfully.")
         return redirect('detail', slug)
-
+    
     return render(request, 'register/editreply.html', {'reply': comment})
 
 
@@ -330,8 +329,7 @@ def create_category(request):
                 category = form.save()
                 return redirect('home')
             except IntegrityError:
-                form.add_error(
-                    'title', 'Category with this name already exists.')
+                form.add_error('title', 'Category with this name already exists.')
     else:
         form = CategoryForm()
 
