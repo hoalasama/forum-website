@@ -1,10 +1,19 @@
 {% load static %}
+
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+{{ block.super }}
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.4.3/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,7 +21,7 @@
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <!--NavBar Section-->
         <div class="navbar">
             <nav class="navigation hide" id="navigation">
@@ -21,37 +30,123 @@
                     <li class="nav-item"><a href="{% url 'home' %}">Home</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item"><a href="{% url 'logout' %}">Logout</a></li>
+                    <li class="nav-item"><a href="{% url 'view_profile' %}">Profile</a></li>
+                    <li class="nav-item"><a href="{% url 'edit_profile' %}">Edit Profile</a></li>
                     {% else %}
                     <li class="nav-item"><a href="{% url 'signup' %}">Signup</a></li>
                     <li class="nav-item"><a href="{% url 'signin' %}">Signin</a></li>
                     {% endif %}
                 </ul>
             </nav>
-            <a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a>
-            <div class="brand">My Forum</div>
-            {% if user.is_authenticated %}
-            <div style="font-size:50px; font-weight:300px; margin-left:100px;"><a href="{% url 'create_post' %}">+</a></div>
-            {% endif %}
-        </div>
-        <!--SearchBox Section-->
-        <div class="search-box">
-            <div>
-                <select name="" id="">
-                    <option value="Everything">Everything</option>
-                    <option value="Titles">Titles</option>
-                    <option value="Descriptions">Descriptions</option>
-                </select>
-                <input type="text" name="q" placeholder="search ...">
-                <button><i class="fa fa-search"></i></button>
+            <div class="myforum">
+                <div id="iconnav"><a class="bar-icon" id="iconBar" onclick="hideIconBar()"><i class="fa fa-bars"></i></a></div>
+                <div class="brand" id="logo"><a id="myforum" style="color:#b2bdbd;" href="{% url 'home' %}">My Forum</a></div>
             </div>
+            <div id="searching" class="">
+                {% if user.is_authenticated %}
+                <form action="{% url 'search_result' %}" role="form" method="GET">
+                {% else %}
+                <form action="{% url 'signin' %}" role="form" method="GET">
+                {% endif %}
+                    <div class="search-box">
+                        <div>                
+                            <input type="text" name="query" placeholder="search ..." id="finding" style="color: white;">
+                        </div>
+                    </div> 
+                </form>
+            </div>
+
+            {% if user.is_authenticated %}
+            {% endif %}
+            <div id="createpost" style="font-size:18px; font-weight:300px; "><a style=" color:#696d97;margin-right:150px" class="btn btn--main" id="createpost" href="
+                {% if user.is_authenticated %}
+                {% url 'create_post' %}
+                {% endif %}
+                ">+ Create Post</a>
+            </div>
+            
+
         </div>
+
     </header>
+    <div class="fixed-button">
+        <a href="">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <div class="popup-overlay">
+        <div class="popup-content">
+            <button class="toggle-language">Change language</button>
+            <div class="translation-container">
+                <textarea class="source-text" placeholder="Input"></textarea>
+                
+                <textarea readonly class="translated-text" placeholder="Output"></textarea>
+            </div>
+            <button class="translate-button">Translate</button>
+            <button class="close-popup">X</button>
+        </div>
+    </div>
     {% block content %}
     {% endblock content %}
     
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var openButton = document.querySelector(".fixed-button a");
+            var overlay = document.querySelector(".popup-overlay");
+            var closeButton = document.querySelector(".close-popup");
+            var sourceText = document.querySelector(".source-text");
+            var translatedText = document.querySelector(".translated-text");
+            var translateButton = document.querySelector(".translate-button");
+            var toggleLanguageButton = document.querySelector(".toggle-language");
+            
+
+            var fromLanguage = "vi"; 
+            var toLanguage = "en";
+
+            openButton.addEventListener("click", function(e) {
+                e.preventDefault();
+                overlay.style.display = "block"; 
+            });
+            
+            closeButton.addEventListener("click", function() {
+                overlay.style.display = "none"; 
+            });
+            
+            translateButton.addEventListener("click", function() {
+                var textToTranslate = sourceText.value; 
+                
+    
+                fetch(`https://api.mymemory.translated.net/get?q=${textToTranslate}&langpair=${fromLanguage}|${toLanguage}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.responseData) {
+                            translatedText.value = data.responseData.translatedText;
+                        } else {
+                            console.error("Translation failed");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error translating text: " + error);
+                    });
+            });
+            toggleLanguageButton.addEventListener("click", function() {
+                
+                var tempLanguage = fromLanguage;
+                fromLanguage = toLanguage;
+                toLanguage = tempLanguage;
         
+                
+                toggleLanguageButton.innerText = `${fromLanguage.toUpperCase()}  -> ${toLanguage.toUpperCase()}`;
+            });
+        });
+    </script>
 
     
     <script src="{% static 'main.js' %}"></script>
+    
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <!--<script src="{% static 'jquery.js' %}"></script>-->
 </body>
 </html>

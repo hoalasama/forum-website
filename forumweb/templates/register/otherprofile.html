@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="user-info">
+
+    <div id="user-pic">
+        <img id="pic" src="{{author.profile_pic.url}}" alt="" width="128" height="128">
+    </div>
+
+    <div id="user-name">
+        <p id="uname">{{author.fullname}} ({{author.roles}})</p>
+    </div>
+
+    <div id="user-bio">
+        <h3>About me </h3>
+        <p>{{ author.bio }}</p>
+    </div>
+
+</div>
+<div id="user-stats">
+    <p><strong>Stats:</strong></p>
+    <ul>
+        <li><strong>Posts:</strong> {{ user_post_count }}</li>
+        <li><strong>Comments:</strong> {{ user_comment_count }}</li>
+        <li><strong>Replys:</strong> {{ user_response_count }}</li>
+    </ul>
+</div>
+
+<div id="user-posts">
+    <p><strong>Posts :</strong></p>
+    <ul>
+        {% for post in user_posts %}
+            <li><a href="{% url 'detail' post.slug %}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

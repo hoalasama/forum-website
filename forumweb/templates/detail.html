@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% load hitcount_tags %}
 {% block content %}
-    <div class="container">
+<style>
+    .post-button {
+        background-color: var(--color-main);
+        cursor: pointer;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+    <div class="container1">
         <!--Navigation-->
         <div class="navigate">
-            <span><a href="{% url 'home' %}">MyForum - Forums</a> >> <a href="{{post.categories.all.0.get_url}}">{{post.categories.all.0}}</a> >> <a href="{{post.get_url}}">{{post.title}}</a></span>
+            <span><a href="{% url 'home' %}">Forums</a> > <a href="{{post.get_url}}">{{post.title}}</a></span>
         </div>
 
         <!--Topic Section-->
@@ -12,22 +22,45 @@
             <!--Original thread-->
             <div class="head">
                 <div class="authors">Author</div>
-                <div class="content">Topic: {{post.title}} (Read {% get_hit_count for post %} Times)</div>
+                <div class="content">Topic: {{post.title}} ({% get_hit_count for post %} views)</div>
+                {% if user.is_authenticated and user == post.user.user %}
+                <a href="{% url 'edit_post' post.id post.slug %}" class="edit-post" style="display:inline-block; margin-right:20px;">Edit</a>
+                <a href="{% url 'delete_post' post.id %}" class="delete-post" style="display:inline-block;">Delete</a>    
+                {% endif %}
             </div>
 
-            <div class="body">
+            <div class="body" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem; margin-bottom: 20px;">
                 <div class="authors">
-                    <div class="username"><a href="">{{post.user.fullname|title}}</a></div>
-                    <div>Role</div>
+                    <div class="username"><a href="{% url 'other_profile' post.user.slug %}">{{post.user.fullname|title}}</a></div>
+                    
                     <img src="{{post.user.profile_pic.url}}" alt="">
                     <div>Posts: <u>{{comment.user.num_posts}}</u></div>
                     <div>Points: <u>{{comment.user.points}}</u></div>
                 </div>
-                <div class="content">
+                <div style="display:inline-block; margin-right:20px;">
+                    {% if user.is_authenticated %}
+                        {% with user_vote=post.get_user_vote %}
+                            <button {% if user_vote and user_vote.vote_type == 'U' %}disabled{% endif %} onclick="upvotePost({{ post.id }})" class="round-button"><span class="triangle-up"></span></button>
+                            <h1 id="vote-count-{{ post.id }}" style="display: flex; justify-content: center;">{{ post.get_vote_count }}</h1>
+                            <button {% if user_vote and user_vote.vote_type == 'D' %}disabled{% endif %} onclick="downvotePost({{ post.id }})" class="round-button"><span class="triangle-down"></span></button>
+                        {% endwith %}
+                    {% endif %}
+                </div>
+                <div class="content" style="display:inline-block;">
                     {{post.content|safe}}
+                    <div>
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'tagged_posts' tag.slug %}">#{{ tag.name }}</a>
+                    {% endfor %}
+                    </div>
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image" style="max-width: 100%; max-height: 400px;">
+                    {% endif %}
+                    {% if user.is_authenticated %}
                     <div class="comment">
                         <button onclick="showComment()">Comment</button>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -35,51 +68,78 @@
 
 
         <!--Comment Area-->
+        
         <form action="." method="post">
             {% csrf_token %}
             <div class="comment-area hide" id="comment-area">
                 <textarea name="comment" id="" placeholder="comment here ... "></textarea>
                 <input type="submit" value="submit" name="comment-form">
+                <button id="hide-button">Hide</button>
             </div>
         </form>
+        
         <!--Comments Section-->
 
         {% for comment in post.comments.all %}
         <div class="comments-container">
-            <div class="body">
+            <div class="body" style="border-radius: 1rem;margin-bottom: 20px;" >
                 <div class="authors">
-                    <div class="username"><a href="">{{comment.user.fullname|title}}</a></div>
-                    <div>Role</div>
+                    <div class="username"><a href="{% url 'other_profile' comment.user.slug %}">{{comment.user.fullname|title}}</a></div>
+                    
                     <img src="{{comment.user.profile_pic.url}}" alt="">
                     <div>Posts: <u>{{comment.user.num_posts}}</u></div>
                     <div>Points: <u>{{comment.user.points}}</u></div>
                 </div>
                 <div class="content">
-                    {{comment.content}}
+                    <div class="comment-content">{{comment.content}}</div>
                     <br>
+                    {% if user.is_authenticated %}
                     <div class="comment">
                         <button onclick="showReplies('comment{{comment.id}}')">Reply</button>
+                        
                     </div>
+                    {% endif %}
+                    {% if user.is_authenticated and user == comment.user.user %}
+                        <button onclick="editComment('{{comment.id}}')" class="post-button">Edit</button>
+                        <!--<a href="{% url 'edit_comment' comment.id post.slug %}" class="edit-comment">Edit</a>-->
+                        <br>
+                        <a href="{% url 'delete_comment' comment.id post.slug %}" class="delete-comment">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!--edit form-->
+        <div class="editcomment-overlay{{comment.id}}">
+            <div class="editcomment-content{{comment.id}}" style="background-color: #3f4156;">
+                <div id="edit-comment-modal-comment{{comment.id}}" style="display: none; ">
+                    <form method="POST" action="{% url 'edit_comment' comment.id post.slug %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea name="new_content" style="background-color: #3f4156; color:#ffffff">{{ comment.content }}</textarea>
+                        <button type="submit">Save</button>
+                        <button class="close" onclick="closeModal('edit-comment-modal-comment{{ comment.id }}')">Close</button>
+                    </form>
                 </div>
             </div>
         </div>
         <!--Reply Area-->
+        
         <form action="." method="post">
             {% csrf_token %}
             <div class="comment-area hide" id="comment{{comment.id}}">
                 <textarea name="reply" id="" placeholder="reply here ... "></textarea>
                 <input type="submit" value="submit" name="reply-form">
                 <input type="hidden" name="comment-id" value="{{comment.id}}">
+                <button onclick="hideReplies(event, 'comment{{comment.id}}')">Hide</button>
             </div>
         </form>
         
         <!--reply section-->
         {% for reply in comment.replies.all %}
         <div class="comments-container" style="width: 95%;  margin-left:5%;">
-            <div class="body">
+            <div class="body" style="border-radius: 1rem;margin-bottom: 20px;">
                 <div class="authors">
-                    <div class="username"><a href="">{{reply.user.fullname|title}}</a></div>
-                    <div>Role</div>
+                    <div class="username"><a href="{% url 'other_profile' reply.user.slug %}">{{reply.user.fullname|title}}</a></div>
+                    <!--<div>Role</div>-->
                     <img src="{{reply.user.profile_pic.url}}" alt="">
                     <div>Posts: <u>{{reply.user.num_posts}}</u></div>
                     <div>Points: <u>{{reply.user.points}}</u></div>
@@ -87,7 +147,25 @@
                 <div class="content">
                     {{reply.content}}
                     <br>
-                    
+                    {% if user.is_authenticated and user == reply.user.user %}
+                        <button onclick="editReply('{{reply.id}}')" class="post-button">Edit</button>
+                        <!--<a href="{% url 'edit_reply' reply.id post.slug %}" class="edit-comment">Edit</a>-->
+                        <br>
+                        <a href="{% url 'delete_reply' reply.id post.slug %}" class="delete-reply">Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!--reply edit pop-->
+        <div class="editreply-overlay{{reply.id}}">
+            <div class="editreply-content{{reply.id}}" style="background-color: #3f4156;">
+                <div id="edit-reply-modal-reply{{reply.id}}" style="display: none;">
+                    <form method="POST" action="{% url 'edit_reply' reply.id post.slug %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <textarea name="new_content" style="background-color: #3f4156; color:#ffffff">{{ reply.content }}</textarea>
+                        <button type="submit">Save</button>
+                        <button class="close" onclick="rcloseModal('edit-reply-modal-reply{{ reply.id }}')">Close</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -96,10 +174,89 @@
 
         {% endfor %}
 
-
-       
-
-        
-
     </div>
+    
+    <script>
+        function upvotePost(postId) {
+            var scrollTop = $(window).scrollTop();
+            $.ajax({
+                url: "{% url 'upvote' 0 %}".replace('0', postId),
+                method: "GET",
+                success: function(response) {
+                    $('#vote-count-' + postId).html(response.vote_count);
+                    $(window).scrollTop(scrollTop);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        
+        function downvotePost(postId) {
+            var scrollTop = $(window).scrollTop();
+            $.ajax({
+                url: "{% url 'downvote' 0 %}".replace('0', postId),
+                method: "GET",
+                success: function(response) {
+                    $('#vote-count-' + postId).html(response.vote_count);
+                    $(window).scrollTop(scrollTop);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function editComment(commentId) {
+            var overlay = document.querySelector('.editcomment-overlay' + commentId);
+            var modal = document.querySelector('.editcomment-content' + commentId);
+            var modals = document.getElementById('edit-comment-modal-comment' + commentId);
+            
+            if (overlay && modal && modals) {
+                overlay.style.display = 'block';
+                modal.style.display = 'block';
+                modals.style.display = 'block';
+            }
+        }
+        
+        function rcloseModal(commentId) {
+            var overlay = document.querySelector('.editcomment-overlay' + commentId);
+            var modal = document.querySelector('.editcomment-content' + commentId);
+            var modals = document.getElementById('edit-comment-modal-comment' + commentId);
+            
+            if (overlay && modal && modals) {
+                overlay.style.display = 'none';
+                modal.style.display = 'none';
+                modals.style.display = 'none';
+            }
+        }
+
+
+
+        function editReply(replyId) {
+            var roverlay = document.querySelector('.editreply-overlay' + replyId);
+            var rmodal = document.querySelector('.editreply-content' + replyId);
+            var rmodals = document.getElementById('edit-reply-modal-reply' + replyId);
+            
+            if (roverlay && rmodal && rmodals) {
+                roverlay.style.display = 'block';
+                rmodal.style.display = 'block';
+                rmodals.style.display = 'block';
+            }
+        }
+        
+        function closeModal(replyId) {
+            var roverlay = document.querySelector('.editreply-overlay' + replyId);
+            var rmodal = document.querySelector('.editreply-content' + replyId);
+            var rmodals = document.getElementById('edit-reply-modal-reply' + replyId);
+            
+            if (roverlay && rmodal && rmodals) {
+                roverlay.style.display = 'none';
+                rmodal.style.display = 'none';
+                rmodals.style.display = 'none';
+            }
+        }
+    </script>
+
     {% endblock content %}

@@ -2,12 +2,71 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<h1 style="text-align:center; margin-block:50px; color:red;">Login</h1>
+<style>
+    .center-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 60vh;
+    }
 
-<form method="POST" action="." style="margin-left:150px;">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <input type="submit" value="Signin" style="margin-block:50px;">
-</form>
+    .signin-form {
+        max-width: 400px;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #3f4156;
+        border-collapse:separate; 
+        border-spacing: 0 10px;
+    }
+    .signin-button {
+        margin-top: 20px;
+        background-color: var(--color-main);
+        cursor: pointer;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 1rem;
+    }
+    input{
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+        padding: 5px;
+    }
+    textarea {
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+    }
+</style>
+
+
+<div class="center-form">
+    <table class="signin-form">
+        <tr>
+            <td colspan="2">
+                <h2>Login</h2>
+            </td>
+        </tr>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Signin" class="signin-button"></td>
+            </tr>
+        </form>
+    </table>
+</div>
 
 {% endblock content %}

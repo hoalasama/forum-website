@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .center-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 110vh;
+    }
+
+    .post-form {
+        max-width: 60%;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #3f4156;
+        border-collapse:separate; 
+        border-spacing: 0 10px;
+    }
+
+    .save-button {
+        margin-top: 20px;
+        background-color: var(--color-main);
+        cursor: pointer;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 1rem;
+    }
+    input{
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+        padding: 5px;
+    }
+    textarea {
+        background-color: var(--color-dark-medium);
+        border: none;
+        color: #ffffff;
+        border-radius: 3px;
+        
+    }
+    select {
+        color: #ffffff;
+        background-color: var(--color-dark-medium);
+        border:none;
+    }
+</style>
+
+<div class="center-form">
+    <table class="post-form">
+        <tr>
+            <td colspan="2">
+                <h2>Edit post</h2>
+            </td>
+        </tr>
+        <form method="POST" enctype="multipart/form-data" class="post-form">
+            {% csrf_token %}
+            <tr>
+                <td>{{ form.title.label_tag }}</td>
+                <td>{{ form.title }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.content.label_tag }}</td>
+                <td>{{ form.content }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.categories.label_tag }}</td>
+                <td>{{ form.categories }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.tags.label_tag }}</td>
+                <td>{{ form.tags }}<span> Ex (tag1, tag2, ...)</span></td>
+            </tr>
+            <tr>
+                <td>{{ form.image.label_tag }}</td>
+                <td>{{ form.image }}</td>  
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit" class="save-button">Save</button>
+                    <a href="{{ request.META.HTTP_REFERER }}" >Back</a>
+                </td>
+            </tr>
+        </form>
+    </table>
+</div>
+
+{% endblock %}

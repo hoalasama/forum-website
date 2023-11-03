@@ -1,0 +1,24 @@
+<div class="category">
+    <div class="subforum-description subforum-column">
+        <h2>Browse Topics</h2>
+    </div>
+    <ul class="topics" style="list-style-type: none;">
+        <li>
+            <a href="{% url 'home' %}" class="active"> All  <span>{{num_posts}}</span></a>
+        </li>
+        {% for forum in forums %}
+        <li>
+            <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span>{{forum.num_posts}}</span></a>
+        </li>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <li>
+            <a href="{% url 'category_full' %}">More</a>
+        </li>
+        {% else %}
+        <li>
+            <a href="">More</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>

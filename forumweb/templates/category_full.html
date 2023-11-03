@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+{% block content %}
+
+<div class="cate_full">
+    <div class="cate">
+        <h2>Browse Topics</h2>
+    </div>
+    <ul class="topic" style="list-style-type: none;">
+        {% for forum in cate %}
+        <li>
+            <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span> ({{forum.num_posts}})</span></a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if author.roles == 'teacher' %}
+    <ul class="nav-item"><a href="{% url 'create_category' %}">Add Category</a></ul>
+    {% endif %}
+</div>
+
+{% endblock content %}

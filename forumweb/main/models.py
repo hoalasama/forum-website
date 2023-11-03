@@ -7,19 +7,25 @@ from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from taggit.managers import TaggableManager
 from django.shortcuts import reverse
-
-
+from django.utils.crypto import get_random_string
+from django.core.validators import EmailValidator
 
 User = get_user_model()
 
 class Author(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=40, blank=True)
-    slug = slug = models.SlugField(max_length=400, unique=True, blank=True)
-    bio = HTMLField()
+    slug = models.SlugField(max_length=400, unique=True, blank=True)
+    bio = HTMLField(default='none')
     points = models.IntegerField(default=0)
-    profile_pic = ResizedImageField(size=[50, 80], quality=100, upload_to="authors", default=None, null=True, blank=False)
-
+    email = models.EmailField(unique=False,default="example@gmail.com", validators=[EmailValidator(message="Invalid email format")])
+    profile_pic = ResizedImageField(size=[400, 400], quality=100, upload_to="authors", default="defaults/default_profile_pic.jpg", null=True, blank=False)
+    ROLES = (
+        ('user','User'),
+        ('teacher','Teacher'),
+        ('admin','Admin'),
+    )
+    roles = models.CharField(max_length=50, choices=ROLES, default="user")
     def __str__(self):
         return self.fullname
 
@@ -67,7 +73,6 @@ class Reply(models.Model):
     class Meta:
         verbose_name_plural = "replies"
 
-    
 class Comment(models.Model):
     user = models.ForeignKey(Author, on_delete=models.CASCADE)
     content = models.TextField()
@@ -85,6 +90,8 @@ class Post(models.Model):
     categories = models.ManyToManyField(Category)
     date = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=True)
+    image = models.ImageField(upload_to='post_images', blank=True, null=True)
+
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',
         related_query_name='hit_count_generic_relation'
     )
@@ -94,17 +101,27 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            base_slug = slugify(self.title)
+            random_string = get_random_string(length=8)
+            self.slug = f"{base_slug}-{random_string}"
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
+    
+    def get_vote_count(self):
+        upvotes = Vote.objects.filter(post=self, activity_type=Vote.UP_VOTE).count()
+        downvotes = Vote.objects.filter(post=self, activity_type=Vote.DOWN_VOTE).count()
+        return upvotes - downvotes
     
     def get_url(self):
         return reverse("detail", kwargs={
             "slug":self.slug
         })
     
+    class Meta:
+        ordering = ['-date']
+
     @property
     def num_comments(self):
         return self.comments.count()
@@ -112,3 +129,19 @@ class Post(models.Model):
     @property
     def last_reply(self):
         return self.comments.latest("date")
+    
+class Vote(models.Model):
+    UP_VOTE = 'U'
+    DOWN_VOTE = 'D'
+    ACTIVITY_TYPES = (
+        (UP_VOTE, 'Up Vote'),
+        (DOWN_VOTE, 'Down Vote'),
+    )
+
+    user = models.ForeignKey(Author, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, null=True, on_delete=models.CASCADE)  
+    activity_type = models.CharField(max_length=1, choices=ACTIVITY_TYPES)
+
+    class Meta:
+        unique_together = ('user', 'post')
+
