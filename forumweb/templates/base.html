@@ -100,7 +100,6 @@
             var translateButton = document.querySelector(".translate-button");
             var toggleLanguageButton = document.querySelector(".toggle-language");
             
-
             var fromLanguage = "vi"; 
             var toLanguage = "en";
 
@@ -115,8 +114,6 @@
             
             translateButton.addEventListener("click", function() {
                 var textToTranslate = sourceText.value; 
-                
-    
                 fetch(`https://api.mymemory.translated.net/get?q=${textToTranslate}&langpair=${fromLanguage}|${toLanguage}`)
                     .then(response => response.json())
                     .then(data => {
@@ -136,7 +133,6 @@
                 fromLanguage = toLanguage;
                 toLanguage = tempLanguage;
         
-                
                 toggleLanguageButton.innerText = `${fromLanguage.toUpperCase()}  -> ${toLanguage.toUpperCase()}`;
             });
         });

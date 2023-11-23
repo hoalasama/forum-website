@@ -19,7 +19,7 @@ class Author(models.Model):
     bio = HTMLField(default='none')
     points = models.IntegerField(default=0)
     email = models.EmailField(unique=False,default="example@gmail.com", validators=[EmailValidator(message="Invalid email format")])
-    profile_pic = ResizedImageField(size=[400, 400], quality=100, upload_to="authors", default="defaults/default_profile_pic.jpg", null=True, blank=False)
+    profile_pic = ResizedImageField(size=[400, 400], quality=100, upload_to="authors", default="defaults/default_user.png", null=True, blank=False)
     ROLES = (
         ('user','User'),
         ('teacher','Teacher'),

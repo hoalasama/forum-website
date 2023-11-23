@@ -1,19 +1,22 @@
 <div class="category">
-    <div class="subforum-description subforum-column">
-        <h2>Browse Topics</h2>
-    </div>
-    <ul class="topics" style="list-style-type: none;">
-        <li>
-            <a href="{% url 'home' %}" class="active"> All  <span>{{num_posts}}</span></a>
-        </li>
-        {% for forum in forums %}
-        <li>
-            <a href="{% url 'home' %}?q={{forum.title}}">{{forum.title}} <span>{{forum.num_posts}}</span></a>
-        </li>
-        {% endfor %}
-        <li>
+  <div class="subforum-description subforum-column">
+    <h2>Browse Topics</h2>
+  </div>
+  <ul class="topics" style="list-style-type: none">
+    <li>
+      <a href="{% url 'home' %}" class="active">
+        All <span>{{num_posts}}</span></a
+      >
+    </li>
+    {% for forum in forums %}
+    <li>
+      <a href="{% url 'home' %}?q={{forum.title}}"
+        >{{forum.title}} <span>{{forum.num_posts}}</span></a
+      >
+    </li>
+    {% endfor %}
+    <!--<li>
             <a href="{% url 'category_full' %}">More</a>
-        </li>
-
-    </ul>
+        </li>-->
+  </ul>
 </div>
